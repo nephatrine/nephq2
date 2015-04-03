@@ -1,6 +1,3 @@
 [submodule "game"]
 	path = game
 	url = https://github.com/q2vr/vrgamex86.git
-[submodule "game_mp"]
-	path = game_mp
-	url = https://github.com/q2vr/mpgamex86.git
