@@ -649,7 +649,19 @@ void *Sys_GetGameAPI (void *parms)
 //	int32_t i = 0;
 	//Knightmare- changed DLL name for better cohabitation
 #ifdef KMQUAKE2_ENGINE_MOD
-	static const char *dllnames[] = {"vrgamex86", "mpgamex86",0};
+#	if defined(_WIN64) || defined(__x86_64__)
+#		ifdef _DEBUG
+			static const char * dllnames[] = { "Game_d_x86-64", "Game_x86-64", 0 };
+#		else
+			static const char * dllnames[] = { "Game_x86-64", "Game_d_x86-64", 0 };
+#		endif
+#	else
+#		ifdef _DEBUG
+			static const char * dllnames[] = { "Game_d_x86", "Game_x86", 0 };
+#		else
+			static const char * dllnames[] = { "Game_x86", "Game_d_x86", 0 };
+#		endif
+#	endif
 #else
 	static const char *dllnames[] = {"game", "gamex86",0};
 #endif

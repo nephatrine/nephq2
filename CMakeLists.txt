@@ -18,6 +18,14 @@ set( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR} )
 set( LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR} )
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/external/" )
 
+if( CMAKE_SIZEOF_VOID_P MATCHES 4 )
+  set( ARCH_NAME "x86" )
+elseif( CMAKE_SIZEOF_VOID_P MATCHES 8 )
+  set( ARCH_NAME "x86-64" )
+endif()
+set( CMAKE_EXECUTABLE_SUFFIX "_${ARCH_NAME}" )
+set( CMAKE_DEBUG_POSTFIX "_d" )
+
 #
 # Required Packages
 #
@@ -353,8 +361,8 @@ source_group( "Backend\\Headers" FILES ${BACKEND_HEADERS} )
 # Build Engine
 #
 
-add_executable( quake2vr ${CLIENT_BASE} ${BACKEND} )
-target_link_libraries( quake2vr
+add_executable( Engine ${CLIENT_BASE} ${BACKEND} )
+target_link_libraries( Engine
                          ${SDL2_LIBRARIES}
                          ${OPENGL_gl_LIBRARY}
                          ${OPENGL_glu_LIBRARY}
@@ -362,14 +370,14 @@ target_link_libraries( quake2vr
                          ${ZLIB_LIBRARIES} )
 if( NOT OVR_DYNAMIC )
   message( STATUS "Building with Oculus Rift support..." )
-  target_link_libraries( quake2vr ${OVR_LIBRARIES} )
+  target_link_libraries( Engine ${OVR_LIBRARIES} )
 endif()
 if( SUPPORT_STEAMVR )
   message( STATUS "Building with SteamVR support..." )
-  target_link_libraries( quake2vr ${STEAMWORKS_LIBRARIES} )
+  target_link_libraries( Engine ${STEAMWORKS_LIBRARIES} )
 endif()
 if( HAS_VISIBILITY_HIDDEN )
-  target_compile_options( quake2vr PRIVATE -fvisibility=hidden )
+  target_compile_options( Engine PRIVATE -fvisibility=hidden )
 endif()
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
   add_definitions( -D_CRT_SECURE_NO_WARNINGS )
