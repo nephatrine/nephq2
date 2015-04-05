@@ -1,85 +1,88 @@
-# Locate OVR library
-# This module defines
-# OVR_LIBRARY, the name of the library to link against
-# OVR_INCLUDE_DIR, the directory containing OVR.h
-# OVR_CAPI_INCLUDE_DIR, the directory containing OVR_CAPI.h
-# OVR_FOUND, if false, do not try to link to OVR
 #
-# If a path is set in the OVRDIR environment variable it will check there
-#
-# This has been tested on OS X
-# This may or may not with Linux - it should, but i think it could be broken easily
+# LibOVR Locations
 #
 
-SET(OVR_SEARCH_PATHS
-  ~/Library/Frameworks
-  /Library/Frameworks
-  /usr/local
-  /usr
-  /sw # Fink
-  /opt/local # DarwinPorts
-  /opt/csw # Blastwave
-  /opt
-)
+set( OVR_SEARCH_PATHS
+       ${CMAKE_SOURCE_DIR}/../LibOVR
+       ${CMAKE_SOURCE_DIR}/../OculusSDK/LibOVR
+       ~/Library/Frameworks
+       /Library/Frameworks
+       /usr
+       /usr/local
+       /opt
+       /opt/csw
+       /opt/local
+       /sw )
+set( OVR_SEARCH_PREFIXES
+       lib
+       lib64 )
 
-SET (OVR_SEARCH_PREFIXES
-	lib 
-	lib64
-)
+#
+# Precompiled Library Locations
+#
 
-IF (APPLE)
-	SET (OVR_SEARCH_PREFIXES ${OVR_SEARCH_PREFIXES}
-		Lib/Mac/Release/
-	) 
-ELSEIF (UNIX)
-  IF( CMAKE_SYSTEM_PROCESSOR MATCHES "i.86" )
-    SET( BUILD_ARCH "i386" )
-  ELSEIF( CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
-    SET( BUILD_ARCH "x86_64" )
-  ENDIF()
-  SET (OVR_SEARCH_PREFIXES ${OVR_SEARCH_PREFIXES} Lib/Linux/Release/${BUILD_ARCH}/ )
-ENDIF()
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
+  if( CMAKE_SYSTEM_PROCESSOR MATCHES "i.86" )
+    set( BUILD_ARCH "i386" )
+  elseif( CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" )
+    set( BUILD_ARCH "x86_64" )
+  endif()
+  set( OVR_SEARCH_PREFIXES
+         ${OVR_SEARCH_PREFIXES}
+         Lib/Linux/Release/${BUILD_ARCH} )
+endif()
 
-FIND_PATH(OVR_INCLUDE_DIR OVR.h
-  HINTS
-  $ENV{OVRDIR}
+#
+# Find Paths
+#
+
+find_path( OVR_INCLUDE_DIR
+  NAMES OVR.h
+  HINTS $ENV{OVRDIR}
   PATH_SUFFIXES include/ Include/
   PATHS ${OVR_SEARCH_PATHS}
-)
-
-FIND_PATH(OVR_CAPI_INCLUDE_DIR OVR_CAPI.h
-  HINTS
-  $ENV{OVRDIR}
-  PATH_SUFFIXES include/ Include/ src/ Src/
+  DOC "LibOVR Include Directory" )
+find_path( OVR_CAPI_INCLUDE_DIR
+  NAMES OVR_CAPI.h
+  HINTS $ENV{OVRDIR}
+  PATH_SUFFIXES src/ Src/
   PATHS ${OVR_SEARCH_PATHS}
-)
-
-FIND_LIBRARY(OVR_LIBRARY_TEMP
+  DOC "LibOVR CAPI Include Directory" )
+find_library( OVR_LIBRARY
   NAMES ovr
-  HINTS
-  $ENV{OVRDIR}
+  HINTS $ENV{OVRDIR}
   PATH_SUFFIXES ${OVR_SEARCH_PREFIXES}
   PATHS ${OVR_SEARCH_PATHS}
-)
+  DOC "LibOVR Library" )
 
-IF(OVR_LIBRARY_TEMP)
-  # For OS X, OVR uses IOKit as a backend so it must link to IOKit.
-  # CMake doesn't display the -framework IOKit string in the UI even
-  # though it actually is there if I modify a pre-used variable.
-  # I think it has something to do with the CACHE STRING.
-  # So I use a temporary variable until the end so I can set the
-  # "real" variable in one-shot.
-  IF(APPLE)
-    SET(OVR_LIBRARY_TEMP ${OVR_LIBRARY_TEMP} "-framework IOKit")
-  ENDIF(APPLE)
+#
+# Did we find it?
+#
 
-  # Set the final string here so the GUI reflects the final state.
-  SET(OVR_LIBRARY ${OVR_LIBRARY_TEMP} CACHE STRING "Where the OVR Library can be found")
-  # Set the temp variable to INTERNAL so it is not seen in the CMake GUI
-  SET(OVR_LIBRARY_TEMP "${OVR_LIBRARY_TEMP}" CACHE INTERNAL "")
-ENDIF(OVR_LIBRARY_TEMP)
-
-INCLUDE(FindPackageHandleStandardArgs)
-
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(OVR REQUIRED_VARS OVR_LIBRARY OVR_INCLUDE_DIR OVR_CAPI_INCLUDE_DIR)
-
+if( OVR_INCLUDE_DIR AND OVR_LIBRARY )
+  set( OVR_FOUND TRUE )
+  set( OVR_INCLUDE_DIRS ${OVR_INCLUDE_DIR} )
+  if( OVR_CAPI_INCLUDE_DIR )
+    list( APPEND OVR_INCLUDE_DIRS ${OVR_CAPI_INCLUDE_DIR} )
+  endif()
+  set( OVR_LIBRARIES ${OVR_LIBRARY} )
+  if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
+    find_library( RT_LIBRARY NAMES rt )
+    find_library( X11_LIBRARY NAMES X11 )
+    find_library( XRANDR_LIBRARY NAMES Xrandr )
+    find_package( Threads )
+    list( APPEND OVR_LIBRARIES ${X11_LIBRARY} )
+    list( APPEND OVR_LIBRARIES ${XRANDR_LIBRARY} )
+    list( APPEND OVR_LIBRARIES ${RT_LIBRARY} )
+    list( APPEND OVR_LIBRARIES ${CMAKE_THREAD_LIBS_INIT} )
+  endif()
+  if( NOT OVR_FIND_QUIETLY )
+    message( STATUS "Found LibOVR: ${OVR_LIBRARIES}" )
+  endif()
+else()
+  if( OVR_FIND_REQUIRED )
+    message( FATAL_ERROR "LibOVR Not Found" )
+  else()
+    message( STATUS "LibOVR Not Found" )
+  endif()
+endif()

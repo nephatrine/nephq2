@@ -1,66 +1,69 @@
-# Locate Steamworks library
-# This module defines
-# STEAMWORKS_LIBRARY, the name of the library to link against
-# STEAMWORKS_INCLUDE_DIR, the directory containing steam/steam_api.h
-# STEAMWORKS_FOUND, if false, do not try to link to Steamworks
 #
-# If a path is set in the SteamworksDIR environment variable it will check there
-#
-# This has been tested on OS X
-# This may or may not with Linux - it should, but i think it could be broken easily
+# LibOVR Locations
 #
 
-SET(STEAMWORKS_SEARCH_PATHS
-  ~/Library/Frameworks
-  /Library/Frameworks
-  /usr/local
-  /usr
-  /sw # Fink
-  /opt/local # DarwinPorts
-  /opt/csw # Blastwave
-  /opt
-)
+set( STEAMWORKS_SEARCH_PATHS
+       ${CMAKE_SOURCE_DIR}/../Steam
+       ${CMAKE_SOURCE_DIR}/../Steamworks
+       ~/Library/Frameworks
+       /Library/Frameworks
+       /usr
+       /usr/local
+       /opt
+       /opt/csw
+       /opt/local
+       /sw )
+set( STEAMWORKS_SEARCH_PREFIXES
+       lib
+       lib64 )
 
-SET (STEAMWORKS_SEARCH_PREFIXES
-	lib 
-	lib64
-)
+#
+# Precompiled Library Locations
+#
 
-IF (APPLE)
-	SET (STEAMWORKS_SEARCH_PREFIXES ${STEAMWORKS_SEARCH_PREFIXES}
-		redistributable_bin/osx32/
-	) 
-ELSEIF (UNIX)
-  IF( CMAKE_SYSTEM_PROCESSOR MATCHES "i.86" )
-    SET( BUILD_ARCH "32" )
-  ELSEIF( CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
-    SET( BUILD_ARCH "64" )
-  ENDIF()
-  SET (STEAMWORKS_SEARCH_PREFIXES ${STEAMWORKS_SEARCH_PREFIXES} redistributable_bin/linux${BUILD_ARCH}/ )
-ENDIF()
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
+  if( CMAKE_SYSTEM_PROCESSOR MATCHES "i.86" )
+    set( BUILD_ARCH "linux32" )
+  elseif( CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" )
+    set( BUILD_ARCH "linux64" )
+  endif()
+  set( STEAMWORKS_SEARCH_PREFIXES
+         ${STEAMWORKS_SEARCH_PREFIXES}
+         redistributable_bin/${BUILD_ARCH} )
+endif()
+       
+#
+# Find Paths
+#
 
-FIND_PATH(STEAMWORKS_INCLUDE_DIR steam/steam_api.h
-  HINTS
-  $ENV{SteamworksDIR}
+find_path( STEAMWORKS_INCLUDE_DIR
+  NAMES steam/steam_api.h
+  HINTS $ENV{SteamworksDIR}
   PATH_SUFFIXES public/ include/ Include/
   PATHS ${STEAMWORKS_SEARCH_PATHS}
-)
-
-FIND_LIBRARY(STEAMWORKS_LIBRARY_TEMP
+  DOC "Steamworks Include Directory" )
+find_library( STEAMWORKS_LIBRARY
   NAMES steam_api
-  HINTS
-  $ENV{SteamworksDIR}
+  HINTS $ENV{SteamworksDIR}
   PATH_SUFFIXES ${STEAMWORKS_SEARCH_PREFIXES}
   PATHS ${STEAMWORKS_SEARCH_PATHS}
-)
+  DOC "Steamworks Library" )
 
-IF(STEAMWORKS_LIBRARY_TEMP)
-  # Set the final string here so the GUI reflects the final state.
-  SET(STEAMWORKS_LIBRARY ${STEAMWORKS_LIBRARY_TEMP} CACHE STRING "Where the Steamworks Library can be found")
-  # Set the temp variable to INTERNAL so it is not seen in the CMake GUI
-  SET(STEAMWORKS_LIBRARY_TEMP "${STEAMWORKS_LIBRARY_TEMP}" CACHE INTERNAL "")
-ENDIF(STEAMWORKS_LIBRARY_TEMP)
+#
+# Did we find it?
+#
 
-INCLUDE(FindPackageHandleStandardArgs)
-
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(Steamworks REQUIRED_VARS STEAMWORKS_LIBRARY STEAMWORKS_INCLUDE_DIR)
+if( STEAMWORKS_INCLUDE_DIR AND STEAMWORKS_LIBRARY )
+  set( STEAMWORKS_FOUND TRUE )
+  set( STEAMWORKS_INCLUDE_DIRS ${STEAMWORKS_INCLUDE_DIR} )
+  set( STEAMWORKS_LIBRARIES ${STEAMWORKS_LIBRARY} )
+  if( NOT STEAMWORKS_FIND_QUIETLY )
+    message( STATUS "Found SteamWorks: ${STEAMWORKS_LIBRARIES}" )
+  endif()
+else()
+  if( STEAMWORKS_FIND_REQUIRED )
+    message( FATAL_ERROR "SteamWorks Not Found" )
+  else()
+    message( STATUS "SteamWorks Not Found" )
+  endif()
+endif()
