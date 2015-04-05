@@ -69,7 +69,7 @@ typedef enum {false, true}	qboolean;
 #endif
 
 // from Quake3 source
-#ifdef WIN32
+#ifdef _MSC_VER
 //#define Q_vsnprintf _vsnprintf
 __inline int32_t Q_vsnprintf (char *Dest, size_t Count, const char *Format, va_list Args) {
 	int32_t ret = _vsnprintf(Dest, Count, Format, Args);
