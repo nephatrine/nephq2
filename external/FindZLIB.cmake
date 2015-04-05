@@ -55,6 +55,12 @@ find_library( ZLIB_LIBRARY
   PATH_SUFFIXES ${ZLIB_SEARCH_PREFIXES}
   PATHS ${ZLIB_SEARCH_PATHS}
   DOC "Zlib Library" )
+find_library( MINIZIP_LIBRARY
+  NAMES minizip
+  HINTS $ENV{ZLIBDIR}
+  PATH_SUFFIXES ${ZLIB_SEARCH_PREFIXES}
+  PATHS ${ZLIB_SEARCH_PATHS}
+  DOC "MiniZip Library" )
 
 #
 # Did we find it?
@@ -67,6 +73,9 @@ if( ZLIB_INCLUDE_DIR AND ZLIB_LIBRARY )
     list( APPEND ZLIB_INCLUDE_DIRS ${MINIZIP_INCLUDE_DIR} )
   endif()
   set( ZLIB_LIBRARIES ${ZLIB_LIBRARY} )
+  if( MINIZIP_LIBRARY )
+    list( APPEND ZLIB_LIBRARIES ${MINIZIP_LIBRARY} )
+  endif()
   if( NOT ZLIB_FIND_QUIETLY )
     message( STATUS "Found Zlib: ${ZLIB_LIBRARIES}" )
   endif()

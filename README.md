@@ -9,6 +9,11 @@ This is my fork of [Quake II VR](https://github.com/q2vr/Quake2VR/), an Oculus R
 - OpenAL HRTF Support
 - SteamVR Support
 
+####Issues
+
+- Linux binaries build, but segfault on initialization. Could be because I'm testing on a Linux VM without any HMD attached or maybe I just screwed up somewhere. GDB hangs the entire VM so I can't debug.
+- Linker errors trying to build with MinGW on Windows. I probably need to build all the deps with MinGW instead of linking the MSVC ones, but that's too much work. Use VS Express Edition if you're on Windows.
+
 ####Play Requirements
 
 - [Quake II (Game Assets)](http://store.steampowered.com/app/2320/)
@@ -16,13 +21,14 @@ This is my fork of [Quake II VR](https://github.com/q2vr/Quake2VR/), an Oculus R
 
 ####Build Requirements
 
-You'll need to download the [Oculus Rift SDK](https://developer.oculus.com/downloads/#version=pc-0.4.4-beta) and extract it into the **external/OculusSDK** directory inside your working directory.
+You'll need to download the [Oculus Rift SDK](https://developer.oculus.com/downloads/#version=pc-0.4.4-beta) and extract it into the **external/OculusSDK** directory inside your working directory. If you are on Linux, you will need to build the library with the Makefile included.
 
 If you want SteamVR HMD support, you'll need to download the [Steamworks SDK](https://partner.steamgames.com/) and extract it into the **external/Steamworks** directory inside your working directory.
 
 On Linux, you'll need to ensure the following packages are also installed:
 
 - libglew-dev
+- libminizip-dev
 - libsdl2-dev
 
 On Windows, precompiled binaries for these libraries built with MSVC 2013 (VS12) will be included.
@@ -31,6 +37,7 @@ If you are on a different platform, you may need to download and build these lib
 
 - [GLEW](http://glew.sourceforge.net/)
 - [SDL2](https://www.libsdl.org/download-2.0.php)
+- [Zlib](http://www.zlib.net/)
 
 ####Acknowledgements
 
