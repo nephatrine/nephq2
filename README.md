@@ -1,5 +1,7 @@
 ###NephQ2
 
+[![Build status](https://ci.appveyor.com/api/projects/status/ga1l0v8hk0t5i6bj/branch/master?svg=true)](https://ci.appveyor.com/project/Nephatrine/nephq2/branch/master)
+
 This is my fork of [Quake II VR](https://github.com/q2vr/Quake2VR/), an Oculus Rift-enabled Quake II engine based on the [KMQuake II](http://www.markshan.com/knightmare/) engine and inspired by [RiftQuake](https://github.com/phoboslab/Quakespasm-Rift).
 
 ####Features
