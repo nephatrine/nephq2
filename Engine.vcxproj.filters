@@ -399,6 +399,9 @@
     <ClCompile Include="qcommon\stable.c">
       <Filter>Source Files\common</Filter>
     </ClCompile>
+    <ClCompile Include="client\vr\oculus_dynamic\oculus_dynamic.c">
+      <Filter>Source Files\client\vr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\anorms.h">

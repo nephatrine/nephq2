@@ -2,9 +2,13 @@
  * include all of the other C++ crap just to get something this
  * simple. */
 
+#ifdef AUTOBUILD
+#define OVR_ALIGNAS(x)
+#endif
+
 #ifdef __linux__
 #define OVR_OS_LINUX
-#elif defined(__WIN32__)
+#elif defined(__WIN32__) || defined(_WIN32) || defined(WIN32)
 #define OVR_OS_WIN32
 #elif defined(__APPLE__)
 #define OVR_OS_MACOS

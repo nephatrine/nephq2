@@ -2,6 +2,8 @@
 // replace SDL_LoadObject with dlopen/LoadLibrary and SDL_LoadFunction
 // with dlsym/GetProcAddress
 
+#ifdef OCULUS_DYNAMIC
+
 #include <SDL.h>
 #include <stdlib.h>
 #include "oculus_dynamic.h"
@@ -65,3 +67,5 @@ void oculus_dynamic_free_library() {
         SDL_UnloadObject(oculus_library_handle);
     oculus_library_handle = NULL;
 }
+
+#endif
