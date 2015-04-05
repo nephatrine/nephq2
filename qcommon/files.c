@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "qcommon.h"
-#include "zip/unzip.h"
+#include "minizip/unzip.h"
 
 // enables faster binary pak searck, still experimental
 #define BINARY_PACK_SEARCH

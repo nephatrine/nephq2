@@ -30,6 +30,15 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
   set( OVR_SEARCH_PREFIXES
          ${OVR_SEARCH_PREFIXES}
          Lib/Linux/Release/${BUILD_ARCH} )
+elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
+  if( CMAKE_SIZEOF_VOID_P MATCHES 4 )
+    set( BUILD_ARCH "Win32" )
+  elseif( CMAKE_SIZEOF_VOID_P MATCHES 8 )
+    set( BUILD_ARCH "x64" )
+  endif()
+  set( OVR_SEARCH_PREFIXES
+         ${OVR_SEARCH_PREFIXES}
+         Lib/${BUILD_ARCH}/VS2013 )
 endif()
 
 #
@@ -49,7 +58,7 @@ find_path( OVR_CAPI_INCLUDE_DIR
   PATHS ${OVR_SEARCH_PATHS}
   DOC "LibOVR CAPI Include Directory" )
 find_library( OVR_LIBRARY
-  NAMES ovr
+  NAMES ovr libovr
   HINTS $ENV{OVRDIR}
   PATH_SUFFIXES ${OVR_SEARCH_PREFIXES}
   PATHS ${OVR_SEARCH_PATHS}
@@ -75,6 +84,9 @@ if( OVR_INCLUDE_DIR AND OVR_LIBRARY )
     list( APPEND OVR_LIBRARIES ${XRANDR_LIBRARY} )
     list( APPEND OVR_LIBRARIES ${RT_LIBRARY} )
     list( APPEND OVR_LIBRARIES ${CMAKE_THREAD_LIBS_INIT} )
+  elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
+    link_libraries( Winmm )
+    link_libraries( Ws2_32 )
   endif()
   if( NOT OVR_FIND_QUIETLY )
     message( STATUS "Found LibOVR: ${OVR_LIBRARIES}" )

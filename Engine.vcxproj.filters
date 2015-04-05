@@ -390,12 +390,6 @@
     <ClCompile Include="client\renderer\r_stereo.c">
       <Filter>Source Files\client\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\zip\unzip.c">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
-    <ClCompile Include="qcommon\zip\ioapi.c">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
     <ClCompile Include="qcommon\hash.c">
       <Filter>Source Files\common</Filter>
     </ClCompile>

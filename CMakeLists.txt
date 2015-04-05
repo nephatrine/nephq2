@@ -22,12 +22,22 @@ set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/external/" )
 # Required Packages
 #
 
+if( NOT DEFINED ENV{GLEWDIR} )
+  set( ENV{GLEWDIR} ${CMAKE_CURRENT_SOURCE_DIR}/external/GLEW/ )
+endif()
+if( NOT DEFINED ENV{SDL2DIR} )
+  set( ENV{SDL2DIR} ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2/ )
+endif()
+if( NOT DEFINED ENV{ZLIBDIR} )
+  set( ENV{ZLIBDIR} ${CMAKE_CURRENT_SOURCE_DIR}/external/Zlib/ )
+endif()
+
 include( CheckLibraryExists )
 find_package( GLEW REQUIRED )
 find_package( OpenGL REQUIRED )
 find_package( SDL2 REQUIRED )
 find_package( ZLIB REQUIRED )
-include_directories( ${SDL2_INCLUDE_DIRS} ${GLEW_INCLUDE_DIR} )
+include_directories( ${SDL2_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} )
 
 #
 # Source Files
@@ -41,11 +51,7 @@ set( COMMON_HEADERS
        qcommon/shared/game.h
        qcommon/shared/q_shared.h
        qcommon/vid_modes.h
-       qcommon/wildcard.h
-       qcommon/zip/unzip.h
-       qcommon/zip/zconf.h
-       qcommon/zip/zlib.h
-       qcommon/zip/ioapi.h )
+       qcommon/wildcard.h )
 set( COMMON_SOURCES 
        qcommon/cmd.c
        qcommon/cmodel.c
@@ -62,9 +68,7 @@ set( COMMON_SOURCES
        qcommon/shared/q_shared.c
        qcommon/stable.c
        qcommon/wildcard.c
-       qcommon/murmur3/murmur3.c
-       qcommon/zip/ioapi.c
-       qcommon/zip/unzip.c )
+       qcommon/murmur3/murmur3.c )
 
 set( CLIENT_HEADERS
        client/adivtab.h
@@ -232,6 +236,23 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
          ${BACKEND_SOURCES}
          backends/unix/net_udp.c
          backends/unix/qsh_unix.c )
+elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
+  set( BACKEND_HEADERS
+         ${BACKEND_HEADERS}
+         backends/win32/conproc.h )
+  set( BACKEND_SOURCES
+         ${BACKEND_SOURCES}
+         backends/win32/conproc.c
+         backends/win32/net_wins.c
+         backends/win32/q_shwin.c )
+endif()
+if( MSVC )
+  set( BACKEND_HEADERS
+         ${BACKEND_HEADERS}
+         backends/win32/resource.h )
+  set( BACKEND_SOURCES
+         ${BACKEND_SOURCES}
+         backends/win32/q2.rc )
 endif()
 
 #
@@ -242,7 +263,7 @@ option( OVR_DYNAMIC       "Dynamically Load LibOVR" OFF )
 if( NOT OVR_DYNAMIC )
   if( NOT DEFINED ENV{OVRDIR} )
     set( ENV{OVRDIR} ${CMAKE_CURRENT_SOURCE_DIR}/external/OculusSDK/LibOVR/ )
-  endif( NOT DEFINED ENV{OVRDIR} )
+  endif()
   find_package( OVR )
   if( OVR_FOUND )
     include_directories( ${OVR_INCLUDE_DIRS} )
@@ -280,7 +301,8 @@ if( SUPPORT_STEAMVR )
     set( ENV{SteamworksDIR} ${CMAKE_CURRENT_SOURCE_DIR}/external/Steamworks/ )
   endif()
   find_package( Steamworks )
-  if( STEAMWORKS_FOUND )
+  # Sorry mingw, but the steamworks headers are very dumb and assume WIN32 == MSVC.
+  if( STEAMWORKS_FOUND AND NOT MINGW )
     if( CMAKE_COMPILER_IS_GNUCC )
       add_definitions( -DCOMPILER_GCC )
     endif()
@@ -348,6 +370,16 @@ if( SUPPORT_STEAMVR )
 endif()
 if( HAS_VISIBILITY_HIDDEN )
   target_compile_options( quake2vr PRIVATE -fvisibility=hidden )
+endif()
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
+  add_definitions( -D_CRT_SECURE_NO_WARNINGS )
+endif()
+if( MSVC )
+  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:\"LIBCMT\" /NODEFAULTLIB:\"MSVCRT\"" )
+  else()
+    set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:\"LIBCMT\" /NODEFAULTLIB:\"LIBC\"" )
+  endif()
 endif()
 
 #

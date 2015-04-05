@@ -30,6 +30,15 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
   set( STEAMWORKS_SEARCH_PREFIXES
          ${STEAMWORKS_SEARCH_PREFIXES}
          redistributable_bin/${BUILD_ARCH} )
+elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
+  if( CMAKE_SIZEOF_VOID_P MATCHES 4 )
+    set( BUILD_ARCH "" )
+  elseif( CMAKE_SIZEOF_VOID_P MATCHES 8 )
+    set( BUILD_ARCH "win64" )
+  endif()
+  set( STEAMWORKS_SEARCH_PREFIXES
+         ${STEAMWORKS_SEARCH_PREFIXES}
+         redistributable_bin/${BUILD_ARCH} )
 endif()
        
 #

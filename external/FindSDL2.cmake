@@ -12,6 +12,25 @@ set( SDL2_SEARCH_PATHS
        /opt/csw
        /opt/local
        /sw )
+set( SDL2_SEARCH_PREFIXES
+       lib
+       lib64 )
+
+#
+# Precompiled Library Locations
+#
+
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
+  if( CMAKE_SIZEOF_VOID_P MATCHES 4 )
+    set( BUILD_ARCH "Win32" )
+  elseif( CMAKE_SIZEOF_VOID_P MATCHES 8 )
+    set( BUILD_ARCH "x64" )
+  endif()
+  set( SDL2_SEARCH_PREFIXES
+         ${SDL2_SEARCH_PREFIXES}
+         VisualC/SDL/${BUILD_ARCH}/Release
+         VisualC/SDLmain/${BUILD_ARCH}/Release )
+endif()
 
 #
 # Find Paths
@@ -26,7 +45,7 @@ find_path( SDL2_INCLUDE_DIR
 find_library( SDL2_LIBRARY
   NAMES SDL2
   HINTS $ENV{SDL2DIR}
-  PATH_SUFFIXES lib64 lib
+  PATH_SUFFIXES ${SDL2_SEARCH_PREFIXES}
   PATHS ${SDL2_SEARCH_PATHS}
   DOC "SDL2 Library" )
 
@@ -39,7 +58,7 @@ if( NOT SDL2_BUILDING_LIBRARY )
     find_library( SDL2_MAIN_LIBRARY
       NAMES SDL2main
       HINTS $ENV{SDL2DIR}
-      PATH_SUFFIXES lib64 lib
+      PATH_SUFFIXES ${SDL2_SEARCH_PREFIXES}
       PATHS ${SDL2_SEARCH_PATHS}
       DOC "SDL2main Library" )
   endif()
