@@ -165,7 +165,7 @@ typedef struct
 	void	(*WriteAngle) (float f);
 
 	// managed memory allocation
-	void	*(*TagMalloc) (int32_t size, int16_t tag);
+	void	*(*TagMalloc) (size_t size, int16_t tag);
 	void	(*TagFree) (void *block);
 	void	(*FreeTags) (int16_t tag);
 

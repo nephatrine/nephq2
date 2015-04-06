@@ -1484,7 +1484,7 @@ void Z_FreeTags (int16_t tag)
 Z_TagMalloc
 ========================
 */
-void *Z_TagMalloc (int32_t size, int16_t tag)
+void *Z_TagMalloc (size_t size, int16_t tag)
 {
 	zhead_t	*z;
     ztag_t *chain = z_tagchain[tag&ZONE_HASHMAP_MASK];
