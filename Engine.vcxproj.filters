@@ -37,6 +37,9 @@
     <Filter Include="Source Files\client\vr">
       <UniqueIdentifier>{a304e156-0b99-4b6f-946f-36e8309f91f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Shared">
+      <UniqueIdentifier>{241fb128-9c8d-45c0-acdd-e5a0902062d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="client\cl_cin.c">
@@ -428,9 +431,6 @@
     <ClInclude Include="client\console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="client\input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -527,14 +527,17 @@
     <ClInclude Include="client\vr\include\vr_ovr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="qcommon\shared\q_shared.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="client\sound\include\qal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="client\renderer\include\r_stereo.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="qcommon\shared\q_shared.h">
+      <Filter>Header Files\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="qcommon\shared\game.h">
+      <Filter>Header Files\Shared</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
