@@ -69,12 +69,16 @@ qboolean modType (char *name);
 /*
 ** VID_CreateWindow
 */
-#define	WINDOW_TITLE	"Quake II VR" // changed
-#define	WINDOW_TITLE_XATRIX	"Quake II VR - The Reckoning" // changed
-#define	WINDOW_TITLE_ROGUE	"Quake II VR - Ground Zero" // changed
+#define	WINDOW_TITLE	"Quake II: Alien Overlord [NephQ2]"
+#define	WINDOW_TITLE_XATRIX	"Quake II: The Reckoning [NephQ2]"
+#define	WINDOW_TITLE_ROGUE	"Quake II: Ground Zero [NephQ2]"
+#define	WINDOW_TITLE_ZAERO	"Quake II: Zaero [NephQ2]"
+#define	WINDOW_TITLE_PAX	"Quake II: Pax Imperia [NephQ2]"
 #define WINDOW_ICON			"icons/q2.bmp"
 #define WINDOW_ICON_XATRIX  "icons/q2mp1.bmp"
 #define WINDOW_ICON_ROGUE	"icons/q2mp2.bmp"
+#define WINDOW_ICON_ZAERO	"icons/q2mp3.bmp"
+#define WINDOW_ICON_PAX	"icons/q2mp4.bmp"
 
 SDL_Surface* GLimp_LoadIcon(char *name)
 {
@@ -245,6 +249,14 @@ rserr_t GLimp_SetMode ( int32_t *pwidth, int32_t *pheight )
 	else if (modType("rogue"))  { // q2mp2
 		icon = GLimp_LoadIcon(WINDOW_ICON_ROGUE);
 		title = WINDOW_TITLE_ROGUE;
+	}
+	else if (modType("zaero"))  { // Zaero Unofficial Missionpack
+		icon = GLimp_LoadIcon(WINDOW_ICON_ZAERO);
+		title = WINDOW_TITLE_ZAERO;
+	}
+	else if (modType("pax"))  { // Pax Imperia Missionpack
+		icon = GLimp_LoadIcon(WINDOW_ICON_PAX);
+		title = WINDOW_TITLE_PAX;
 	}
 	else {
 		icon = GLimp_LoadIcon(WINDOW_ICON);
