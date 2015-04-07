@@ -48,6 +48,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdbool.h>
 #endif
 
+#if defined(_WIN64) && !defined(C_ONLY)
+#define C_ONLY 1
+#endif
+
 #if (defined _M_IX86 || defined __i386__) && !defined C_ONLY
 #define id386	1
 #else
