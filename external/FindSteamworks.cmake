@@ -52,7 +52,7 @@ find_path( STEAMWORKS_INCLUDE_DIR
   PATHS ${STEAMWORKS_SEARCH_PATHS}
   DOC "Steamworks Include Directory" )
 find_library( STEAMWORKS_LIBRARY
-  NAMES steam_api
+  NAMES steam_api steam_api64
   HINTS $ENV{SteamworksDIR}
   PATH_SUFFIXES ${STEAMWORKS_SEARCH_PREFIXES}
   PATHS ${STEAMWORKS_SEARCH_PATHS}

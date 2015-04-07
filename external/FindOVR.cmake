@@ -58,7 +58,7 @@ find_path( OVR_CAPI_INCLUDE_DIR
   PATHS ${OVR_SEARCH_PATHS}
   DOC "LibOVR CAPI Include Directory" )
 find_library( OVR_LIBRARY
-  NAMES ovr libovr
+  NAMES ovr libovr libovr64
   HINTS $ENV{OVRDIR}
   PATH_SUFFIXES ${OVR_SEARCH_PREFIXES}
   PATHS ${OVR_SEARCH_PATHS}
