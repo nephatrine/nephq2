@@ -18,8 +18,11 @@ This is my fork of [Quake II VR](https://github.com/q2vr/Quake2VR/), an Oculus R
 
 ####Play Requirements
 
+Requirements:
 - [Quake II (Game Assets)](http://store.steampowered.com/app/2320/)
 - [Oculus Rift DK2](https://www.oculus.com/dk2/)
+
+You can download the required data files from [Google Drive](https://drive.google.com/folderview?id=0B-r9NuHyXlh3fm1WREI1QkI5NWxXVXlxaXA0Tnpkb0dCNFQ3cTFqZ0tyX0FCd2VLS2JLVkk&usp=sharing). These will need to be put into your Quake II directory along with NephQ2 binaries. I probably will not be putting up precompiled binaries as this is still a fast-moving project and hasn't really reached a milestone yet. You can, however, download the latest unsupported 32-bit Windows binaries from my [AppVeyor](https://ci.appveyor.com/project/Nephatrine/nephq2/branch/master/artifacts), though these have not been tested in most cases. The automated builds are also lacking SteamVR support.
 
 ####Build Requirements
 

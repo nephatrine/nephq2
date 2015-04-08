@@ -8,8 +8,7 @@ build:
   verbosity: minimal
 test: off
 artifacts:
-- path: bin\EngineTest32.exe
-  name: Engine
-- path: bin\baseq2\Game_x86.dll
-  name: Game
+- path: bin
+  name: NephQ2
+  type: zip
 deploy: off
