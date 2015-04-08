@@ -307,7 +307,7 @@ char *Sys_GetClipboardData( void )
 	sdl_cliptext = SDL_GetClipboardText();
 	if (!sdl_cliptext)
 		return NULL;
-	data = Z_TagStrdup(sdl_cliptext, TAG_SYSTEM);
+	data = (char*)Z_TagStrdup(sdl_cliptext, TAG_SYSTEM);
 	SDL_free(sdl_cliptext);
 	return data;
 }
@@ -425,7 +425,7 @@ char *Sys_GetBaseDir (void) {
         char* dir = SDL_GetBasePath();
         if (dir) {
             int i;
-            basepath = Z_TagStrdup(dir, TAG_SYSTEM);
+            basepath = (char*)Z_TagStrdup(dir, TAG_SYSTEM);
             SDL_free(dir);
             Com_Printf("Got base path %s\n", basepath);
             i = strlen(basepath) - 1;
@@ -438,7 +438,7 @@ char *Sys_GetBaseDir (void) {
             i = strlen(basepath);
             if (i == 0) {
                 Z_Free(basepath);
-                basepath = Z_TagStrdup(".", TAG_SYSTEM);
+				basepath = (char*)Z_TagStrdup(".", TAG_SYSTEM);
             } else {
                 i--;
                 for (;i>=0;i--) {
@@ -449,7 +449,7 @@ char *Sys_GetBaseDir (void) {
             }
 
         } else {
-            basepath = Z_TagStrdup(".", TAG_SYSTEM);
+			basepath = (char*)Z_TagStrdup(".", TAG_SYSTEM);
         }
             Com_Printf("Using base path %s\n", basepath);
     }
