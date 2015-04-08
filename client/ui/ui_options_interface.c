@@ -87,7 +87,9 @@ static void SimpleLoadscreenFunc( void *unused )
 Font loading
 =======================================================================
 */
-cvar_t *con_font;
+
+extern cvar_t *con_font;
+
 #define MAX_FONTS 32
 static char **font_names = NULL;
 int32_t	numfonts = 0;

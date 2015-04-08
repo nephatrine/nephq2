@@ -213,10 +213,10 @@ void Field_Draw (menufield_s *f)
 					f->generic.y + f->generic.parent->y, tempbuffer, alpha);
 }
 
+extern int32_t keydown[];
+
 qboolean Field_Key (menufield_s *f, int32_t key)
 {
-	extern int32_t keydown[];
-
 	switch ( key )
 	{
 	case K_KP_SLASH:

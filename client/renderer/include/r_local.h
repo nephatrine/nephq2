@@ -57,7 +57,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __VIDDEF_T
 typedef struct
 {
-	unsigned		width, height;			// coordinates from main game
+	int		width, height;			// coordinates from main game
 } viddef_t;
 #endif
 
@@ -1035,13 +1035,13 @@ r_antialias.c
 ====================================================================
 */
 
-enum {
+enum r_antialias_t {
 	ANTIALIAS_NONE,
 	ANTIALIAS_4X_FSAA,
 	ANTIALIAS_FXAA,
 	ANTIALIAS_FXAA_FSS,
 	NUM_ANTIALIAS_MODES
-} r_antialias_t;
+};
 
 void R_AntialiasStartFrame (void);
 void R_AntialiasInit (void);
