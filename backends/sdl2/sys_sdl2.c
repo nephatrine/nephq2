@@ -126,8 +126,8 @@ Sys_ConsoleInput
 char *Sys_ConsoleInput (void)
 {
 	INPUT_RECORD	recs[1024];
-	int32_t		dummy;
-	int32_t		ch, numread, numevents;
+	unsigned long		dummy, numread, numevents;
+	int32_t		ch;
 
 	if (!dedicated || !dedicated->value)
 		return NULL;
@@ -201,7 +201,7 @@ Print text to the dedicated console
 */
 void Sys_ConsoleOutput (char *string)
 {
-	int32_t		dummy;
+	unsigned long		dummy;
 	char	text[256];
 
 	if (!dedicated || !dedicated->value)
