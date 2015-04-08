@@ -661,7 +661,7 @@ Key_SetBinding
 */
 void Key_SetBinding (int32_t keynum, char *binding)
 {
-	char	*new;
+	char	*new_one;
 	int32_t		l;
     int i;
 	
@@ -682,11 +682,11 @@ void Key_SetBinding (int32_t keynum, char *binding)
 			
 // allocate memory for new binding
 	l = strlen (binding);	
-	new = (char*)Z_TagMalloc (l+1, TAG_CLIENT);
-	strcpy (new, binding);
-	new[l] = 0;
-	keybindings[keynum] = new;
-    keybindinghashes[keynum] = Q_HashSanitized32(new);
+	new_one = (char*)Z_TagMalloc (l+1, TAG_CLIENT);
+	strcpy (new_one, binding);
+	new_one[l] = 0;
+	keybindings[keynum] = new_one;
+    keybindinghashes[keynum] = Q_HashSanitized32(new_one);
     
     
 }
