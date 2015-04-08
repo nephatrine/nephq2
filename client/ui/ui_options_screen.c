@@ -329,7 +329,7 @@ void Options_Screen_MenuInit ( void )
 	SetCrosshairNames ();
     
     memset(crosshairs, 0, sizeof(crosshairs));
-    crosshairs[0] = (image_s*)1;
+    crosshairs[0] = (struct image_s*)1;
     UI_Options_ReloadCrosshairs();
     
 	s_options_screen_crosshair_box.generic.type				= MTYPE_SPINCONTROL;

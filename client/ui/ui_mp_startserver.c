@@ -427,7 +427,7 @@ void UI_RefreshMapImages(void) {
     // levelshot found table
     if (ui_svr_mapshotvalid && ui_svr_mapshot) {
         ui_svr_mapshotvalid = (byte*)Z_Realloc(ui_svr_mapshotvalid, sizeof( byte ) * ( ui_svr_nummaps + 1 ));
-        ui_svr_mapshot = (image_s**)Z_Realloc(ui_svr_mapshot, sizeof( struct image_s *) * ( ui_svr_nummaps + 1 ) );
+        ui_svr_mapshot = (struct image_s**)Z_Realloc(ui_svr_mapshot, sizeof( struct image_s *) * ( ui_svr_nummaps + 1 ) );
         
         memset( ui_svr_mapshotvalid, 0, sizeof( byte ) * ( ui_svr_nummaps + 1 ) );
         memset( ui_svr_mapshot, 0, sizeof( struct image_s *) * ( ui_svr_nummaps + 1 ) );
