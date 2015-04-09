@@ -123,12 +123,12 @@
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>EngineTest32</TargetName>
+    <TargetName>Engine_x86</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Automated|x64'">
     <IntDir>$(SolutionDir)build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>EngineTest64</TargetName>
+    <TargetName>Engine_x86-64</TargetName>
     <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -151,6 +151,7 @@
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -176,6 +177,7 @@
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32sd.lib;opengl32.lib;xinput9_1_0.lib;libovrd.lib;wsock32.lib;winmm.lib;zlibstat.lib;ws2_32.lib;steam_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)external\SDL2\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.dll $(OutDir)
@@ -206,6 +208,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\steam_api.dll $(OutDi
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -230,6 +233,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\steam_api.dll $(OutDi
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32sd.lib;opengl32.lib;xinput9_1_0.lib;libovr64d.lib;wsock32.lib;winmm.lib;zlibstat.lib;ws2_32.lib;steam_api64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)external\SDL2\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.dll $(OutDir)
@@ -259,6 +263,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -284,6 +289,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32s.lib;opengl32.lib;xinput9_1_0.lib;libovr.lib;winmm.lib;wsock32.lib;zlibstat.lib;ws2_32.lib;steam_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)external\SDL2\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.dll $(OutDir)
@@ -311,6 +317,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\steam_api.dll $(OutDi
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -335,6 +342,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\steam_api.dll $(OutDi
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32s.lib;opengl32.lib;xinput9_1_0.lib;libovr64.lib;wsock32.lib;winmm.lib;zlibstat.lib;ws2_32.lib;steam_api64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)external\SDL2\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.dll $(OutDir)
@@ -364,6 +372,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <DebugInformationFormat>None</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -388,7 +397,12 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <AdditionalLibraryDirectories>external\GLEW\lib\Release\$(Platform)\;external\SDL2\VisualC\SDL\$(Platform)\Release\;external\SDL2\VisualC\SDLmain\$(Platform)\Release\;external\Zlib\contrib\vstudio\vc12\x86\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32s.lib;opengl32.lib;xinput9_1_0.lib;winmm.lib;wsock32.lib;zlibstat.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)external\SDL2\VisualC\SDL\$(Platform)\Release\SDL2.dll $(OutDir)</Command>
+      <Message>Copy Deps</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Automated|x64'">
     <ClCompile>
@@ -409,6 +423,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <DebugInformationFormat>None</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -432,7 +447,14 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <AdditionalLibraryDirectories>external\GLEW\lib\Release\$(Platform)\;external\SDL2\VisualC\SDL\$(Platform)\Release\;external\SDL2\VisualC\SDLmain\$(Platform)\Release\;external\Zlib\contrib\vstudio\vc12\x64\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32s.lib;opengl32.lib;xinput9_1_0.lib;winmm.lib;wsock32.lib;zlibstat.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)external\SDL2\VisualC\SDL\$(Platform)\Release\SDL2.dll $(OutDir)</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy Deps</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="client\renderer\r_alias.c" />
