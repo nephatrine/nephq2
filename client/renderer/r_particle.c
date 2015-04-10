@@ -538,7 +538,7 @@ void R_RenderParticle (particle_t *p)
 	VectorCopy(particle_coord[3], coord[3]);
 
 	size = (p->size>0.1) ? p->size : 0.1;
-	shaded = (p->flags & PART_SHADED);
+	shaded = (p->flags & PART_SHADED) != 0;
 
 	if (shaded) {
 		GetParticleLight (p, p->origin, lighting, shadelight);
@@ -558,7 +558,7 @@ void R_RenderParticle (particle_t *p)
 
 	thisPart.imagenum = TexParticle(p->image);
 	thisPart.polymode = GL_TRIANGLES;
-	thisPart.overbright = (p->flags & PART_OVERBRIGHT);
+	thisPart.overbright = (p->flags & PART_OVERBRIGHT) != 0;
 	thisPart.polygon_offset_fill = true;
 	thisPart.alphatest = false;
 	thisPart.blendfunc_src = p->blendfunc_src;

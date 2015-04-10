@@ -474,8 +474,8 @@ typedef struct {
 	int32_t valid;
 } fbo_t;
 
-int32_t R_GenFBO(int32_t width, int32_t height, int32_t bilinear, GLenum format, fbo_t *FBO);
-int32_t R_ResizeFBO(int32_t width, int32_t height, int32_t bilinear,GLenum format, fbo_t *FBO);
+qboolean R_GenFBO(int32_t width, int32_t height, int32_t bilinear, GLenum format, fbo_t *FBO);
+qboolean R_ResizeFBO(int32_t width, int32_t height, int32_t bilinear,GLenum format, fbo_t *FBO);
 void R_SetFBOFilter(int32_t bilinear, fbo_t *FBO);
 void R_DelFBO(fbo_t *FBO);
 void R_InitFBO(fbo_t *FBO);
@@ -974,7 +974,7 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 
 void		GLimp_BeginFrame( );
 void		GLimp_EndFrame( void );
-int32_t 		GLimp_Init( );
+qboolean 		GLimp_Init( );
 void		GLimp_Shutdown( void );
 rserr_t    	GLimp_SetMode( int32_t *pwidth, int32_t *pheight );
 void		GLimp_AppActivate( qboolean active );

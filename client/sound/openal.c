@@ -595,7 +595,7 @@ AL_Update(void)
 
 	if (al_hrtf->modified)
 	{
-		QAL_SetHRTF(al_hrtf->value);
+		QAL_SetHRTF(al_hrtf->value != 0);
 		al_hrtf->modified = false;
 	}
     
@@ -835,7 +835,7 @@ AL_Init(void)
 		}
 	}
     
-  	QAL_SetHRTF(al_hrtf->value);
+  	QAL_SetHRTF(al_hrtf->value != 0);
 	al_hrtf->modified = false;
 	s_numchannels = i;
 	AL_InitStreamSource();

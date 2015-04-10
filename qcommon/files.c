@@ -2038,7 +2038,7 @@ ComparePackFiles(const char *findname, const char *name, uint32_t musthave,
 		return false;
 	}
 
-	retval = glob_match((char *)findname, buffer);
+	retval = glob_match((char *)findname, buffer) != 0;
 
 	if (retval && (output != NULL))
 	{

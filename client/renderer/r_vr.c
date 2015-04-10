@@ -490,7 +490,7 @@ void R_VR_Enable()
 
 		hmd = &available_hmds[(int32_t) vr_enabled->value];
 
-		success = R_GenFBO(640,480,1,GL_RGBA8,&hud);
+		success = R_GenFBO(640,480,1,GL_RGBA8,&hud) != 0;
 		success = success && hmd->enable && hmd->enable();
 
 		// shader init

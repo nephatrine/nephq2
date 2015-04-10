@@ -309,6 +309,9 @@ cvar_t *Cvar_Set2 (char *var_name, char *value, qboolean force)
 			{
 				var->string = (char*)Z_TagStrdup(value, TAG_SYSTEM);
 				var->value = atof (var->string);
+#ifdef NEW_CVAR_MEMBERS
+				var->integer = atoi(var->string);
+#endif
 				if (!strcmp(var->name, "game"))
 				{
 					FS_SetGamedir (var->string);

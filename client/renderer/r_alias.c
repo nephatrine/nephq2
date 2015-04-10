@@ -157,7 +157,7 @@ void RB_RenderAliasMesh (maliasmodel_t *paliashdr, uint32_t meshnum, uint32_t sk
 	renderparms_t	skinParms;
 	int32_t				i;
 	float			thisalpha = colorArray[0][3];
-	qboolean		shellModel = e->flags & RF_MASK_SHELL;
+	qboolean		shellModel = (e->flags & RF_MASK_SHELL) != 0;
 
 	if (!paliashdr)
 		return;
@@ -270,7 +270,7 @@ void R_DrawAliasMeshes (maliasmodel_t *paliashdr, entity_t *e, qboolean lerpOnly
 	float			alpha, meshalpha, thisalpha, shellscale, frontlerp, backlerp = e->backlerp, mirrormult;
 	image_t			*skin;
 	renderparms_t	skinParms;
-	qboolean		shellModel = e->flags & RF_MASK_SHELL;
+	qboolean		shellModel = (e->flags & RF_MASK_SHELL) != 0;
 
 	frontlerp = 1.0 - backlerp;
 
@@ -736,7 +736,7 @@ void R_DrawAliasVolumeShadow (maliasmodel_t *paliashdr, vec3_t bbox[8])
 		if (paliashdr->meshes[i].skins[skinnum].renderparms.noshadow)
 			continue;
 
-		R_BuildShadowVolume (paliashdr, i, light, projected_distance, r_shadowvolumes->value);
+		R_BuildShadowVolume (paliashdr, i, light, projected_distance, r_shadowvolumes->value != 0);
 		GL_LockArrays (shadow_va);
 
 		if (!r_shadowvolumes->value)

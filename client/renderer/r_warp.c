@@ -281,7 +281,7 @@ void RB_RenderWarpSurface (msurface_t *fa)
 //	float		alpha = colorArray[0][3];
 	image_t		*image = R_TextureAnimation (fa);
 	qboolean	light = r_warp_lighting->value && !(fa->texinfo->flags & SURF_NOLIGHTENV);
-	qboolean	texShaderWarp = r_waterquality->value;
+	qboolean	texShaderWarp = r_waterquality->value > 0;
 
 	if (rb_vertex == 0 || rb_index == 0) // nothing to render
 		return;
@@ -303,7 +303,7 @@ void RB_RenderWarpSurface (msurface_t *fa)
 	*/
 	if (texShaderWarp)
 	{
-        int fog = (r_fogenable > 0) ? (r_fogmodel + 1) : 0;
+        int fog = r_fogenable ? (r_fogmodel + 1) : 0;
         
 		GLfloat param[4];
 		float rdt = r_newrefdef.time;

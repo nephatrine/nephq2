@@ -1540,7 +1540,7 @@ void R_DrawBrushModel (entity_t *e)
 		contentsAND = (contents[0]&contents[1]&contents[2]&contents[3]&contents[4]&contents[5]&contents[6]&contents[7]&contents[8]);
 		contentsOR = (contents[0]|contents[1]|contents[2]|contents[3]|contents[4]|contents[5]|contents[6]|contents[7]|contents[8]);
 	//	viewInWater = (Mod_PointInLeaf(r_newrefdef.vieworg, r_worldmodel)->contents & MASK_WATER);
-		viewInWater = (CL_PMpointcontents(r_newrefdef.vieworg) & MASK_WATER);
+		viewInWater = (CL_PMpointcontents(r_newrefdef.vieworg) & MASK_WATER) != 0;
 		if ( (contentsAND & MASK_WATER) || ((contentsOR & MASK_WATER) && viewInWater) )
 		{
 			if (contentsOR & CONTENTS_LAVA)

@@ -167,7 +167,7 @@ void CL_ParseServerData (void)
 		Com_Error (ERR_DROP,"Server returned version %i, not %i", i, PROTOCOL_VERSION);
 
 	cl.servercount = MSG_ReadLong (&net_message);
-	cl.attractloop = MSG_ReadByte (&net_message);
+	cl.attractloop = MSG_ReadByte (&net_message) != 0;
 
 	// game directory
 	str = MSG_ReadString (&net_message);

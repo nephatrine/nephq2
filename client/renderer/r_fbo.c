@@ -1,7 +1,7 @@
 #include "include/r_local.h"
 
 
-int32_t R_GenFBO(int32_t width, int32_t height, int32_t bilinear, GLenum format, fbo_t *FBO)
+qboolean R_GenFBO(int32_t width, int32_t height, int32_t bilinear, GLenum format, fbo_t *FBO)
 {
 	GLuint fbo, tex, dep;
 	int32_t err;
@@ -50,7 +50,7 @@ int32_t R_GenFBO(int32_t width, int32_t height, int32_t bilinear, GLenum format,
 		glDeleteTextures(1, &tex);
 		glDeleteRenderbuffersEXT(1, &dep);
 		glDeleteFramebuffersEXT(1, &fbo);
-		return 0;
+		return false;
 	}
 	else {
 		int32_t err;
@@ -66,16 +66,16 @@ int32_t R_GenFBO(int32_t width, int32_t height, int32_t bilinear, GLenum format,
 		FBO->format = format;
 		FBO->valid = 1;
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,glState.currentFBO->framebuffer);
-		return 1;
+		return true;
 	}
 }
 
-int32_t R_ResizeFBO(int32_t width, int32_t height,  int32_t bilinear, GLenum format, fbo_t *FBO)
+qboolean R_ResizeFBO(int32_t width, int32_t height,  int32_t bilinear, GLenum format, fbo_t *FBO)
 {
 	int32_t err;
 	
 	if (FBO == &screenFBO)
-		return 0;
+		return false;
 
 	if (!FBO->valid)
 	{
@@ -114,7 +114,7 @@ int32_t R_ResizeFBO(int32_t width, int32_t height,  int32_t bilinear, GLenum for
 	FBO->width = width;
 	FBO->height = height;
 	FBO->format = format;
-	return 1;
+	return true;
 }
 
 void R_SetFBOFilter(int32_t bilinear, fbo_t *FBO)

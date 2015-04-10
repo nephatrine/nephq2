@@ -2193,7 +2193,7 @@ void SCR_ExecuteLayoutString (char *s, qboolean isStatusBar)
                 //	if (cl.frame.playerstate.stats[STAT_FLASHES] & 4)
                 //		R_DrawScaledPic (x, y, getScreenScale(), hud_alpha->value, "field_3");
                 
-                SCR_DrawField (x, y, color, width, value, (cl.frame.playerstate.stats[STAT_FLASHES] & 4), isStatusBar);
+                SCR_DrawField (x, y, color, width, value, (cl.frame.playerstate.stats[STAT_FLASHES] & 4) != 0, isStatusBar);
                 continue;
             }
             
@@ -2211,7 +2211,7 @@ void SCR_ExecuteLayoutString (char *s, qboolean isStatusBar)
                 //	if (cl.frame.playerstate.stats[STAT_FLASHES] & 2)
                 //		R_DrawScaledPic (x, y, getScreenScale(), hud_alpha->value, "field_3");
                 
-                SCR_DrawField (x, y, color, width, value, (cl.frame.playerstate.stats[STAT_FLASHES] & 2), isStatusBar);
+                SCR_DrawField (x, y, color, width, value, (cl.frame.playerstate.stats[STAT_FLASHES] & 2) != 0, isStatusBar);
                 continue;
             }
             

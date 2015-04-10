@@ -23,7 +23,7 @@ int32_t VR_SVR_Enable()
 
 	if (!hasBeenInitialized)
 	{
-		hasBeenInitialized = SteamVR_Init();
+		hasBeenInitialized = SteamVR_Init() != 0;
 		if (!hasBeenInitialized)
 		{
 			Com_Printf("VR_SVR: Fatal error initializing SteamVR support");
@@ -41,7 +41,7 @@ int32_t VR_SVR_Enable()
 	else {
 		qboolean result = false;
 		Com_Printf("VR_SVR: Initializing HMD:");
-		result = (qboolean) SteamVR_GetSettings(&svr_settings);
+		result = SteamVR_GetSettings(&svr_settings) != 0;
 		if (!result)
 		{
 			Com_Printf(" failed!\n");
@@ -64,7 +64,7 @@ int32_t VR_SVR_Init()
 {
 	if (!hasBeenInitialized)
 	{
-		hasBeenInitialized = SteamVR_Init();
+		hasBeenInitialized = SteamVR_Init() != 0;
 		if (!hasBeenInitialized)
 		{
 			Com_Printf("VR_SVR: Fatal error initializing SteamVR support");

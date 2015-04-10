@@ -228,11 +228,11 @@ int32_t VR_OVR_RenderLatencyTest(vec4_t color)
 {
 	uint8_t ovrLatencyColor[3] = {0, 0, 0};
 
-	qboolean use = (qboolean) false;
+	ovrBool use = 0;
 	if (hmd->Type >= ovrHmd_DK2)
-		use = (qboolean) ovrHmd_GetLatencyTest2DrawColor(hmd,ovrLatencyColor);
+		use = ovrHmd_GetLatencyTest2DrawColor(hmd,ovrLatencyColor);
 	else if (vr_ovr_latencytest->value)
-		use = (qboolean) ovrHmd_ProcessLatencyTest(hmd,ovrLatencyColor);
+		use = ovrHmd_ProcessLatencyTest(hmd,ovrLatencyColor);
 
 	color[0] = ovrLatencyColor[0] / 255.0f;
 	color[1] = ovrLatencyColor[1] / 255.0f;

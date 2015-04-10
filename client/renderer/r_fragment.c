@@ -182,7 +182,7 @@ R_ClipFragmentToSurface
 */
 static void R_ClipFragmentToSurface (msurface_t *surf, const vec3_t normal, mnode_t *node)
 {
-	qboolean planeback = surf->flags & SURF_PLANEBACK;
+	qboolean planeback = (surf->flags & SURF_PLANEBACK) != 0;
 	int32_t				i;
 	float			d;
 	vec3_t			points[MAX_FRAGMENT_POINTS];

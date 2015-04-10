@@ -408,7 +408,7 @@ void VR_Move (usercmd_t *cmd)
 	else if (mode == 7)
 		viewmove = false;
 	else
-		viewmove = (qboolean) vr_viewmove->value;
+		viewmove = vr_viewmove->value != 0;
 
 	VR_GetOrientation(orientation);
 	VR_GetOrientationDelta(orientationDelta);

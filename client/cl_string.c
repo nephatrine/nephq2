@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 StringSetParams
 ================
 */
-qboolean StringSetParams (char modifier, int32_t *red, int32_t *green, int32_t *blue, int32_t *bold, int32_t *shadow, int32_t *italic, int32_t *reset)
+qboolean StringSetParams (char modifier, int32_t *red, int32_t *green, int32_t *blue, qboolean *bold, qboolean *shadow, qboolean *italic, qboolean *reset)
 {
 	if (!alt_text_color)
 		alt_text_color = Cvar_Get ("alt_text_color", "2", CVAR_ARCHIVE);
@@ -92,8 +92,8 @@ void DrawStringGeneric (int32_t x, int32_t y, const char *string, int32_t alpha,
 {
 	uint32_t i, j;
 	uint8_t modifier, character;
-	int32_t len, red, green, blue, italic, shadow, bold, reset;
-	qboolean modified = false;
+	int32_t len, red, green, blue;
+	qboolean italic, shadow, bold, reset, modified = false;
 	float textSize, textScale;
 
 	// defaults
@@ -114,7 +114,7 @@ void DrawStringGeneric (int32_t x, int32_t y, const char *string, int32_t alpha,
 		{
 			i++;
 
-			reset = 0;
+			reset = false;
 			modifier = string[i];
 			if (modifier&128) modifier &= ~128;
 
