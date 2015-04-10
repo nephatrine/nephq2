@@ -1,8 +1,6 @@
 ###NephQ2
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ga1l0v8hk0t5i6bj/branch/master?svg=true)](https://ci.appveyor.com/project/Nephatrine/nephq2/branch/master)
-
-This is my fork of [Quake II VR](https://github.com/q2vr/Quake2VR/), an Oculus Rift-enabled Quake II engine based on the [KMQuake II](http://www.markshan.com/knightmare/) engine and inspired by [RiftQuake](https://github.com/phoboslab/Quakespasm-Rift).
+This is my fork of [Quake II VR](https://github.com/q2vr/Quake2VR/), a VR-enabled Quake II engine based on the [KMQuake II](http://www.markshan.com/knightmare/) engine.
 
 ####Features
 
@@ -18,13 +16,26 @@ This is my fork of [Quake II VR](https://github.com/q2vr/Quake2VR/), an Oculus R
 
 ####Play Requirements
 
-Requirements:
-- [Quake II (Game Assets)](http://store.steampowered.com/app/2320/)
-- [Oculus Rift DK2](https://www.oculus.com/dk2/)
+##### Getting Quake II
 
-You can download the required data files from [Google Drive](https://drive.google.com/folderview?id=0B-r9NuHyXlh3fm1WREI1QkI5NWxXVXlxaXA0Tnpkb0dCNFQ3cTFqZ0tyX0FCd2VLS2JLVkk&usp=sharing). These will need to be put into your Quake II directory along with NephQ2 binaries. I probably will not be putting up precompiled binaries as this is still a fast-moving project and hasn't really reached a milestone yet. You can, however, download the latest unsupported 32-bit Windows binaries from my [AppVeyor](https://ci.appveyor.com/project/Nephatrine/nephq2/branch/master/artifacts), though these have not been tested in most cases. The automated builds are also lacking SteamVR support.
+[![Retail Game](https://img.shields.io/badge/Quake%20II-Full%20Game-blue.svg)](http://store.steampowered.com/app/2320/)
+[![Q2 Demo](https://img.shields.io/badge/Quake%20II-3.14%20Demo-brightgreen.svg)](http://store.steampowered.com/app/2320/)
+[![Q2 Patch](https://img.shields.io/badge/Quake%20II-3.20%20Patch-brightgreen.svg)](http://store.steampowered.com/app/2320/)
+
+I suggest purchasing the retail version of Quake II from Steam to support id Software and get the full game assets. If you cannot, you can get a limited version that does not include the majority of the single-player campaign for free. Do this by installing the free demo and then installing the official 3.20 patch on top of it. The stock 3.20 binaries no longer run on most modern systems so if you intend to play the vanilla game, the [unofficial Quake II 3.24 patch](http://www.markshan.com/knightmare/downloads/quake2-3.24-win32.zip) will allow you to do so on Windows.
+
+There are also "starter packs" that will handle installing the demo, patch, and working binaries for you automatically available for [Windows (32-Bit)](http://q2s.tastyspleen.net/) (installs [Q2Pro](http://skuller.net/q2pro/) engine), [Mac OSX](http://quake2world.net/files/Quake%20II%20%28Quake2World.net%29.dmg), and [Linux (64-Bit)](http://quake2world.net/files/quake2-quake2world.net-x86_64.tar.gz).
+
+##### Installing NephQ2
+
+[![Data Files](https://img.shields.io/badge/NephQ2-Data%20Files-brightgreen.svg)](https://drive.google.com/folderview?id=0B-r9NuHyXlh3fm1WREI1QkI5NWxXVXlxaXA0Tnpkb0dCNFQ3cTFqZ0tyX0FCd2VLS2JLVkk&usp=sharing)
+[![Binaries](https://img.shields.io/badge/NephQ2-Windows%20(x86)-brightgreen.svg)](https://ci.appveyor.com/project/Nephatrine/nephq2/branch/master/artifacts)
+
+Place the NephQ2 data files into your Quake II **baseq2** directory. You'll have to either build the binaries yourself or use the compiled 32-bit Windows binaries from AppVeyor. These have not been tested in most cases and do not support SteamVR. Place the binaries into your Quake II directory.
 
 ####Build Requirements
+
+[![Build Status](https://ci.appveyor.com/api/projects/status/ga1l0v8hk0t5i6bj/branch/master?svg=true)](https://ci.appveyor.com/project/Nephatrine/nephq2/branch/master)
 
 You'll need to download the [Oculus Rift SDK](https://developer.oculus.com/downloads/#version=pc-0.4.4-beta) and extract it into the **external/OculusSDK** directory inside your working directory. If you are on Linux, you will need to build the library with the Makefile included.
 
