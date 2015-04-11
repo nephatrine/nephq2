@@ -47,12 +47,12 @@ HANDLE	hStdin;
 unsigned _stdcall RequestProc (void *arg);
 LPVOID GetMappedBuffer (HANDLE hfileBuffer);
 void ReleaseMappedBuffer (LPVOID pBuffer);
-BOOL GetScreenBufferLines (int *piLines);
-BOOL SetScreenBufferLines (int iLines);
-BOOL ReadText (LPTSTR pszText, int iBeginLine, int iEndLine);
+BOOL GetScreenBufferLines (PSHORT piLines);
+BOOL SetScreenBufferLines (SHORT iLines);
+BOOL ReadText (LPTSTR pszText, SHORT iBeginLine, SHORT iEndLine);
 BOOL WriteText (LPCTSTR szText);
-int CharToCode (char c);
-BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy);
+WORD CharToCode (char c);
+BOOL SetConsoleCXCY(HANDLE hStdout, SHORT cx, SHORT cy);
 
 int		ccom_argc;
 char	**ccom_argv;
@@ -159,10 +159,10 @@ void DeinitConProc (void)
 
 unsigned _stdcall RequestProc (void *arg)
 {
-	int		*pBuffer;
+	SHORT		*pBuffer;
 	DWORD	dwRet;
 	HANDLE	heventWait[2];
-	int		iBeginLine, iEndLine;
+	SHORT		iBeginLine, iEndLine;
 	
 	heventWait[0] = heventParentSend;
 	heventWait[1] = heventDone;
@@ -175,7 +175,7 @@ unsigned _stdcall RequestProc (void *arg)
 		if (dwRet == WAIT_OBJECT_0 + 1)	
 			break;
 
-		pBuffer = (int *) GetMappedBuffer (hfileBuffer);
+		pBuffer = (SHORT*)GetMappedBuffer(hfileBuffer);
 		
 	// hfileBuffer is invalid.  Just leave.
 		if (!pBuffer)
@@ -188,7 +188,7 @@ unsigned _stdcall RequestProc (void *arg)
 		{
 			case CCOM_WRITE_TEXT:
 			// Param1 : Text
-				pBuffer[0] = WriteText ((LPCTSTR) (pBuffer + 1));
+				pBuffer[0] = (SHORT)WriteText((LPCTSTR)(pBuffer + 1));
 				break;
 
 			case CCOM_GET_TEXT:
@@ -196,18 +196,17 @@ unsigned _stdcall RequestProc (void *arg)
 			// Param2 : End line
 				iBeginLine = pBuffer[1];
 				iEndLine = pBuffer[2];
-				pBuffer[0] = ReadText ((LPTSTR) (pBuffer + 1), iBeginLine, 
-									   iEndLine);
+				pBuffer[0] = (SHORT)ReadText((LPTSTR)(pBuffer + 1), iBeginLine, iEndLine);
 				break;
 
 			case CCOM_GET_SCR_LINES:
 			// No params
-				pBuffer[0] = GetScreenBufferLines (&pBuffer[1]);
+				pBuffer[0] = (SHORT)GetScreenBufferLines(&pBuffer[1]);
 				break;
 
 			case CCOM_SET_SCR_LINES:
 			// Param1 : Number of lines
-				pBuffer[0] = SetScreenBufferLines (pBuffer[1]);
+				pBuffer[0] = (SHORT)SetScreenBufferLines(pBuffer[1]);
 				break;
 		}
 
@@ -237,7 +236,7 @@ void ReleaseMappedBuffer (LPVOID pBuffer)
 }
 
 
-BOOL GetScreenBufferLines (int *piLines)
+BOOL GetScreenBufferLines (SHORT *piLines)
 {
 	CONSOLE_SCREEN_BUFFER_INFO	info;							  
 	BOOL						bRet;
@@ -251,14 +250,13 @@ BOOL GetScreenBufferLines (int *piLines)
 }
 
 
-BOOL SetScreenBufferLines (int iLines)
+BOOL SetScreenBufferLines (SHORT iLines)
 {
-
 	return SetConsoleCXCY (hStdout, 80, iLines);
 }
 
 
-BOOL ReadText (LPTSTR pszText, int iBeginLine, int iEndLine)
+BOOL ReadText (LPTSTR pszText, SHORT iBeginLine, SHORT iEndLine)
 {
 	COORD	coord;
 	DWORD	dwRead;
@@ -286,7 +284,8 @@ BOOL WriteText (LPCTSTR szText)
 {
 	DWORD			dwWritten;
 	INPUT_RECORD	rec;
-	char			upper, *sz;
+	char			*sz;
+	WORD			upper;
 
 	sz = (LPTSTR) szText;
 
@@ -296,7 +295,7 @@ BOOL WriteText (LPCTSTR szText)
 		if (*sz == 10)
 			*sz = 13;
 
-		upper = toupper(*sz);
+		upper = (WORD)toupper(*sz);
 
 		rec.EventType = KEY_EVENT;
 		rec.Event.KeyEvent.bKeyDown = TRUE;
@@ -328,9 +327,9 @@ BOOL WriteText (LPCTSTR szText)
 }
 
 
-int CharToCode (char c)
+WORD CharToCode (char c)
 {
-	char upper;
+	int upper;
 		
 	upper = toupper(c);
 
@@ -344,16 +343,16 @@ int CharToCode (char c)
 	}
 
 	if (isalpha(c))
-		return (30 + upper - 65); 
+		return ((WORD)(30 + upper - 65));
 
 	if (isdigit(c))
-		return (1 + upper - 47);
+		return ((WORD)(1 + upper - 47));
 
 	return c;
 }
 
 
-BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy)
+BOOL SetConsoleCXCY(HANDLE hStdout, short cx, short cy)
 {
 	CONSOLE_SCREEN_BUFFER_INFO	info;
 	COORD						coordMax;
