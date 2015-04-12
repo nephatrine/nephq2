@@ -1215,7 +1215,7 @@ SDL_BackendInit(void)
 	{
 		SDL_snprintf(reqdriver, sizeof(reqdriver), "%s=%s", "SDL_AUDIODRIVER", s_sdldriver->string);
 	}
-	putenv(reqdriver);
+	_putenv(reqdriver);
 
 	Com_Printf("Starting SDL audio callback.\n");
 

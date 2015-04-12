@@ -336,7 +336,7 @@ void UI_LoadMapList (void)
 	else
 	{
 #ifdef _WIN32
-		length = filelength( fileno( fp  ) );
+		length = _filelength( _fileno( fp  ) );
 #else
 		fseek(fp, 0, SEEK_END);
 		length = ftell(fp);
