@@ -48,14 +48,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdbool.h>
 #endif
 
-#if defined(_WIN64) && !defined(C_ONLY)
-#define C_ONLY 1
-#endif
+//
+// MSVC Pragmas
+//
 
-#if (defined _M_IX86 || defined __i386__) && !defined C_ONLY
-#define id386	1
-#else
-#define id386	0
+#ifdef _MSC_VER
+#pragma warning(disable : 4096) // __cdecl must be used with '...'
+#pragma warning(disable : 4142) // Benign Redefinition
+#pragma warning(disable : 4244) // Possible Loss Of Data
+#pragma warning(2 : 4189 4210 4389)
+#pragma warning(3 : 4056)
+#pragma warning(3 : 4191)
+#pragma warning(3 : 4245)
+#pragma warning(3 : 4254)
+#pragma warning(3 : 4287)
+#pragma warning(3 : 4296)
+//#pragma warning(3 : 4514)
+#pragma warning(3 : 4545)
+#pragma warning(3 : 4546)
+#pragma warning(3 : 4547)
+#pragma warning(3 : 4548)
+#pragma warning(3 : 4549)
+#pragma warning(3 : 4555)
+#pragma warning(3 : 4905)
+#pragma warning(3 : 4906)
+#pragma intrinsic(memcmp)
 #endif
 
 typedef uint8_t	byte;
@@ -260,11 +277,7 @@ extern vec3_t vec3_origin;
 // microsoft's fabs seems to be ungodly slow...
 //float Q_fabs (float f);
 //#define	fabs(f) Q_fabs(f)
-#if !defined C_ONLY && !defined __linux__ && !defined __sgi && !defined __APPLE__
-extern int32_t Q_ftol( float f );
-#else
 #define Q_ftol( f ) ( long ) (f)
-#endif
 
 #define DotProduct(x,y)			(x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
 #define VectorSubtract(a,b,c)	(c[0]=a[0]-b[0],c[1]=a[1]-b[1],c[2]=a[2]-b[2])

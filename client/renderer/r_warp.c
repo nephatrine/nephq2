@@ -402,13 +402,8 @@ void R_DrawWarpSurface (msurface_t *fa, float alpha, qboolean render)
 		}
 		for (i=0, v=p->verts[0]; i<p->numverts; i++, v+=VERTEXSIZE)
 		{
-		#if !id386
 			s = v[3] + r_turbsin[(int32_t)((v[4]*0.125+rdt) * TURBSCALE) & 255];
 			t = v[4] + r_turbsin[(int32_t)((v[3]*0.125+rdt) * TURBSCALE) & 255];
-		#else
-			s = v[3] + r_turbsin[Q_ftol( ((v[4]*0.125+rdt) * TURBSCALE) ) & 255];
-			t = v[4] + r_turbsin[Q_ftol( ((v[3]*0.125+rdt) * TURBSCALE) ) & 255];
-		#endif
 			s += scroll;
 			s *= DIV64;
 			t *= DIV64;

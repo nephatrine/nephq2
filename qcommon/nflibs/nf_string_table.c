@@ -126,7 +126,7 @@ void nfst_grow(struct nfst_StringTable *st, int bytes)
 	float average_strlen = st->count > 0 ? (float)st->string_bytes / (float)st->count : 15.0f;
 	float bytes_per_string = average_strlen + 1 + sizeof(uint16_t) * HASH_FACTOR;
 	float num_strings = (bytes - sizeof(*st)) / bytes_per_string;
-	int bytes_for_strings_16 = bytes - sizeof(*st) - sizeof(uint16_t) * st->num_hash_slots;
+//	int bytes_for_strings_16 = bytes - sizeof(*st) - sizeof(uint16_t) * st->num_hash_slots;
 	int bytes_for_strings_32 = bytes - sizeof(*st) - sizeof(uint32_t) * st->num_hash_slots;
 	char * new_strings;
 
