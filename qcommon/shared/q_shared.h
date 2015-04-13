@@ -22,18 +22,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	
 // q_shared.h -- included first by ALL program modules
 
-#ifdef _WIN32
-// unknown pragmas are SUPPOSED to be ignored, but....
-#pragma warning(disable : 4244)     // MIPS
-#pragma warning(disable : 4136)     // X86
-#pragma warning(disable : 4051)     // ALPHA
+//
+//
+//
 
-#pragma warning(disable : 4748)		// warning about no buffer protection with optimizations disabled
-#pragma warning(disable : 4996)		// POSIX name deprecation
-#pragma warning(disable : 4018)     // signed/unsigned mismatch
-#pragma warning(disable : 4305)		// truncation from const double to float
+#include "../../Source/Shared.h"
 
-#endif
+//
+// C Headers
+//
 
 #include <assert.h>
 #include <math.h>
@@ -41,18 +38,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdarg.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <time.h>
-
-#if (defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)) || (defined(_MSC_VER) && (_MSC_VER >= 1800))
-#include <stdbool.h>
-#endif
 
 //
 // MSVC Pragmas
 //
 
 #ifdef _MSC_VER
+#pragma warning(disable : 4018) // Signed/Unsigned Mismatch
 #pragma warning(disable : 4096) // __cdecl must be used with '...'
 #pragma warning(disable : 4142) // Benign Redefinition
 #pragma warning(disable : 4244) // Possible Loss Of Data
@@ -75,13 +68,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma intrinsic(memcmp)
 #endif
 
-typedef uint8_t	byte;
+//
+// Type Definitions
+//
 
-#if defined(__cplusplus) || defined(__bool_true_false_are_defined)
-	typedef bool qboolean;
-#else
-	typedef enum{ false, true } qboolean;
-#endif
+typedef uint8_t	byte;
+typedef bool_t qboolean;
+
+//
+// Macro Definitions
+//
 
 #ifndef NULL
 #define NULL ((void *)0)

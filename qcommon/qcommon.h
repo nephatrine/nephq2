@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __QCOMMON_H
 
 #include "shared/q_shared.h"
+#include "../../Source/GameEngine.h"
 #include "glob.h"
 
 #define	VERSION	"4.2" //was 3.21
@@ -976,7 +977,6 @@ char	*Sys_ConsoleInput (void);
 void	Sys_ConsoleOutput (char *string);
 void	Sys_SendKeyEvents (void);
 void	Sys_Error (char *error, ...);
-void	Sys_Quit (void);
 char	*Sys_GetClipboardData( void );
 void	Sys_CopyProtect (void);
 

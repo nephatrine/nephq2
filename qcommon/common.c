@@ -210,7 +210,7 @@ void Com_Error (int32_t code, char *fmt, ...)
 	{
 		CL_Drop ();
 		recursive = false;
-		longjmp (abortframe, -1);
+		throw "longjmp (abortframe, -1)";
 	}
 	else if (code == ERR_DROP)
 	{
@@ -220,7 +220,7 @@ void Com_Error (int32_t code, char *fmt, ...)
 		SV_Shutdown (va("Server crashed: %s\n", msg), false);
 		CL_Drop ();
 		recursive = false;
-		longjmp (abortframe, -1);
+		throw "longjmp (abortframe, -1)";
 	}
 	else
 	{
@@ -246,10 +246,11 @@ Both client and server can use this, and it will
 do the apropriate things.
 =============
 */
+
 void Com_Quit (void)
 {
 	SV_Shutdown ("Server quit\n", false);
-	CL_Shutdown ();
+//	CL_Shutdown ();
 
 	if (logfile)
 	{
@@ -257,7 +258,7 @@ void Com_Quit (void)
 		logfile = NULL;
 	}
 
-	Sys_Quit ();
+	if (Handler::Game) Handler::Game->abort();
 }
 
 
@@ -1801,8 +1802,8 @@ void Qcommon_Init (int32_t argc, char **argv)
 
     //char	*cfgfile; // Knightmare added
 
-	if (setjmp (abortframe) )
-		Sys_Error ("Error during initialization");
+//	if (setjmp (abortframe) )
+//		Sys_Error ("Error during initialization");
     
     memset(z_tagchain,0,sizeof(z_tagchain));
     
@@ -1914,8 +1915,8 @@ void Qcommon_Frame (int32_t msec)
 	char	*s;
 	int32_t		time_before, time_between, time_after;
 
-	if (setjmp (abortframe) )
-		return;			// an ERR_DROP was thrown
+//	if (setjmp (abortframe) )
+//		return;			// an ERR_DROP was thrown
 
 	if ( log_stats->modified )
 	{

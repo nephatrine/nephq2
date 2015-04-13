@@ -112,12 +112,15 @@
     <IntDir>$(SolutionDir)build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <TargetName>Engine_x86</TargetName>
+    <CodeAnalysisRuleSet>NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>$(SolutionDir)build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <TargetName>Engine_x86-64</TargetName>
     <OutDir>$(SolutionDir)bin\</OutDir>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Automated|Win32'">
     <OutDir>$(SolutionDir)bin\</OutDir>
@@ -264,6 +267,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <CompileAs>CompileAsCpp</CompileAs>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -318,6 +322,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\steam_api.dll $(OutDi
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <CompileAs>CompileAsCpp</CompileAs>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -398,6 +403,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32s.lib;opengl32.lib;xinput9_1_0.lib;winmm.lib;wsock32.lib;zlibstat.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)external\SDL2\VisualC\SDL\$(Platform)\Release\SDL2.dll $(OutDir)</Command>
@@ -448,6 +454,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32s.lib;opengl32.lib;xinput9_1_0.lib;winmm.lib;wsock32.lib;zlibstat.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)external\SDL2\VisualC\SDL\$(Platform)\Release\SDL2.dll $(OutDir)</Command>
@@ -578,6 +585,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
     <ClCompile Include="backends\win32\conproc.c" />
     <ClCompile Include="backends\win32\net_wins.c" />
     <ClCompile Include="backends\win32\q_shwin.c" />
+    <ClCompile Include="Source\GameEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\anorms.h" />
@@ -624,6 +632,8 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
     <ClInclude Include="renderer\warpsin.h" />
     <ClInclude Include="qcommon\wildcard.h" />
     <ClInclude Include="backends\win32\winnewerror.h" />
+    <ClInclude Include="Source\GameEngine.h" />
+    <ClInclude Include="Source\Shared.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="backends\win32\q2.ico" />

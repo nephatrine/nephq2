@@ -405,6 +405,9 @@
     <ClCompile Include="client\vr\oculus_dynamic\oculus_dynamic.c">
       <Filter>Source Files\client\vr</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\anorms.h">
@@ -538,6 +541,12 @@
     </ClInclude>
     <ClInclude Include="qcommon\shared\game.h">
       <Filter>Header Files\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shared.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
