@@ -21,7 +21,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../qcommon/qcommon.h"
 #include "sdl2quake.h"
-#include <SDL_main.h>
 #include <errno.h>
 #include <float.h>
 #include <fcntl.h>
@@ -70,15 +69,10 @@ Sys_Milliseconds
 int32_t	curtime;
 int32_t Sys_Milliseconds (void)
 {
-	static int32_t		base;
-	static qboolean	initialized = false;
-
-	if (!initialized)
+	if (Handler::Game)
 	{
-		base = SDL_GetTicks();
-		initialized = true;
+		curtime = Handler::Game->newTicks();
 	}
-	curtime = SDL_GetTicks () - base;
 	return curtime;
 }
 
@@ -283,8 +277,8 @@ void Sys_SendKeyEvents (void)
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		sys_msg_time = event.common.timestamp;
-		SDL_ProcEvent(&event, sys_msg_time);
+//		sys_msg_time = event.common.timestamp;
+		SDL_ProcEvent(&event, event.common.timestamp);
 	}
 
 
@@ -343,26 +337,6 @@ void Sys_Error (char *error, ...)
 	DeinitConProc ();
 #endif
 	exit (1);
-}
-
-
-void Sys_Quit (void)
-{
-#ifdef _WIN32
-	timeEndPeriod( 1 );
-#endif
-	CL_Shutdown();
-	Qcommon_Shutdown ();
-
-#ifdef _WIN32
-	if (dedicated && dedicated->value)
-		FreeConsole ();
-
-// shut down QHOST hooks if necessary
-	DeinitConProc ();
-#endif
-
-	exit (0);
 }
 
 //================================================================
@@ -471,7 +445,6 @@ void Sys_Init (void)
 	if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_VIDEO) != 0){
 		Sys_Error("SDL_Init failed!");
 	}
-
     
 #ifdef _WIN32
 	timeBeginPeriod( 1 );
@@ -682,81 +655,4 @@ void *Sys_GetGameAPI (void *parms)
 	}
 
 	return GetGameAPI (parms);
-}
-
-//=======================================================================
-
-/*
-==================
-main
-
-==================
-*/
-
-int32_t main(int32_t argc, char *argv[])
-{
-	int32_t				time, oldtime, newtime;
-//	qboolean		cdscan = false; // Knightmare added
-
-		
-#ifdef _WIN32
-	SetProcessDPIAware();
-#endif
-
-
-	Qcommon_Init (argc, argv);
-	oldtime = Sys_Milliseconds ();
-#ifndef _WIN32
-	nostdout = Cvar_Get("nostdout", "0", 0);
-	if (!nostdout->value) {
-		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
-	}
-#endif
-    /* main window message loop */
-	while (1)
-	{
-		SDL_Event event;
-		// if at a full screen console, don't update unless needed
-		if (Minimized || (dedicated && dedicated->value) )
-		{
-			SDL_Delay (1);
-		}
-
-		while (SDL_PollEvent(&event))
-		{
-			sys_msg_time = event.common.timestamp;
-			SDL_ProcEvent(&event, sys_msg_time);
-		}
-
-
-		// DarkOne's CPU usage fix
-		while (1)
-		{
-			newtime = Sys_Milliseconds();
-			time = newtime - oldtime;
-			if (time > 0) break;
-			if (!vr_enabled->value || !vr_nosleep->value)
-				SDL_Delay(0); // may also use SDL_Delay(1); to free more CPU, but it can lower your fps
-		}
-
-		/*do
-		{
-			newtime = Sys_Milliseconds ();
-			time = newtime - oldtime;
-		} while (time < 1);*/
-		//	Con_Printf ("time:%5.2f - %5.2f = %5.2f\n", newtime, oldtime, time);
-
-		//	_controlfp( ~( _EM_ZERODIVIDE /*| _EM_INVALID*/ ), _MCW_EM );
-
-#ifdef _WIN32
-		// is this necessary? Linux seems well behaved without it
-//		_controlfp( _PC_24, _MCW_PC );
-#endif
-		Qcommon_Frame (time);
-
-		oldtime = newtime;
-	}
-
-	// never gets here
-    return 0;
 }
