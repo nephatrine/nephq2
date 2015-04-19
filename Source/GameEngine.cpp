@@ -3,7 +3,6 @@
 //
 
 #include "GameEngine.h"
-#include "GameOption.h"
 #include "GameTimer.h"
 #include <SDL_events.h>
 
