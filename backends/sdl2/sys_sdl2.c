@@ -19,6 +19,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // sys_sdl2.h
 
+#include "../../Source/GameTimer.h"
+
 #include "../../qcommon/qcommon.h"
 #include "sdl2quake.h"
 #include <errno.h>
@@ -69,9 +71,9 @@ Sys_Milliseconds
 int32_t	curtime;
 int32_t Sys_Milliseconds (void)
 {
-	if (Handler::Game)
+	if (Handler::Timer)
 	{
-		curtime = Handler::Game->newTicks();
+		curtime = Handler::Timer->getCurrent();
 	}
 	return curtime;
 }

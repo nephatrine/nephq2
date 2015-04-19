@@ -410,21 +410,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="client\anorms.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\anorms.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\anormtab.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="qcommon\bspfile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="client\cinematic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="client\client.h">
       <Filter>Header Files</Filter>
     </ClInclude>

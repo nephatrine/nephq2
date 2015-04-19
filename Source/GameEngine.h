@@ -1,5 +1,5 @@
-#ifndef SYSTEM_GAMEENGINE_H
-#define SYSTEM_GAMEENGINE_H 1
+#ifndef GAME_ENGINE_H
+#define GAME_ENGINE_H 1
 
 #include "Shared.h"
 
@@ -14,12 +14,7 @@ namespace Game
 		bool_t abort() { bool_t retCode = !abortLoop; abortLoop = true; return retCode; }
 		int run();
 
-		uint32_t lastTicks() const { return timeLast; } // curtime
-		uint32_t newTicks();                            // Sys_Milliseconds
-
 	private:
-		uint32_t timeStarted;
-		uint32_t timeLast;
 		bool_t abortLoop;
 	};
 }

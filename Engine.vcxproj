@@ -586,6 +586,8 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
     <ClCompile Include="backends\win32\net_wins.c" />
     <ClCompile Include="backends\win32\q_shwin.c" />
     <ClCompile Include="Source\GameEngine.cpp" />
+    <ClCompile Include="Source\GameTimer.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\anorms.h" />
@@ -607,9 +609,6 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
     <ClInclude Include="client\vr\include\vr_svr.h" />
     <ClInclude Include="qcommon\shared\game.h" />
     <ClInclude Include="qcommon\shared\q_shared.h" />
-    <ClInclude Include="renderer\anorms.h" />
-    <ClInclude Include="renderer\anormtab.h" />
-    <ClInclude Include="qcommon\bspfile.h" />
     <ClInclude Include="client\cinematic.h" />
     <ClInclude Include="client\client.h" />
     <ClInclude Include="backends\sdl2\sdl2quake.h" />
@@ -624,15 +623,11 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
     <ClInclude Include="client\ref.h" />
     <ClInclude Include="client\screen.h" />
     <ClInclude Include="server\server.h" />
-    <ClInclude Include="client\snd_loc.h" />
-    <ClInclude Include="client\snd_ogg.h" />
-    <ClInclude Include="client\sound.h" />
     <ClInclude Include="client\vid.h" />
-    <ClInclude Include="renderer\vlights.h" />
-    <ClInclude Include="renderer\warpsin.h" />
     <ClInclude Include="qcommon\wildcard.h" />
     <ClInclude Include="backends\win32\winnewerror.h" />
     <ClInclude Include="Source\GameEngine.h" />
+    <ClInclude Include="Source\GameTimer.h" />
     <ClInclude Include="Source\Shared.h" />
   </ItemGroup>
   <ItemGroup>

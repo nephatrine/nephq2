@@ -1,21 +1,17 @@
-//
-// NephQ2 Headers
+// -----------------------------------------------
+// Include Headers
 //
 
 #include "GameEngine.h"
-
-//
-// System Headers
-//
+#include "GameOption.h"
+#include "GameTimer.h"
+#include <SDL_events.h>
 
 #ifdef _WIN32
 #include <Windows.h>
 #endif
-#include <SDL_events.h> // SDL_PollEvent
-#include <SDL_main.h>   // SDL_main
-#include <SDL_timer.h>  // SDL_GetTicks
 
-//
+// -----------------------------------------------
 // Legacy Declarations
 //
 
@@ -30,22 +26,21 @@ void CL_Shutdown(void);
 void Qcommon_Shutdown(void);
 void DeinitConProc(void);
 
-//
-// Code
+// -----------------------------------------------
+// Initialize Globals
 //
 
 Game::Engine *Handler::Game = nullptr;
 
-uint32_t Game::Engine::newTicks()
-{
-	return timeLast = (SDL_GetTicks() - timeStarted);
-}
+// -----------------------------------------------
+// Constructor
+// Initialize engine.
+//
 
 Game::Engine::Engine(int argc, char *argv[])
-: timeStarted(0), timeLast(0), abortLoop(false)
+: abortLoop(false)
 {
 #ifdef _WIN32
-	// Fix Windows DPI Scaling
 	SetProcessDPIAware();
 #endif
 
@@ -56,11 +51,6 @@ Game::Engine::Engine(int argc, char *argv[])
 	}
 #endif
 
-	//
-	// Really Dumb Try/Catch
-	// Slightly better than the setjmp/longjmp it's replacing.
-	//
-
 	try
 	{
 		Qcommon_Init(argc, argv);
@@ -70,19 +60,18 @@ Game::Engine::Engine(int argc, char *argv[])
 		Sys_Error("Error during initialization");
 	}
 
-	// We're ready to start.
 	Handler::Game = this;
-	timeStarted = SDL_GetTicks();
 }
+
+// -----------------------------------------------
+// Destructor
+// Clean up after engine.
+//
 
 Game::Engine::~Engine()
 {
 	CL_Shutdown();
 	Qcommon_Shutdown();
-
-#ifdef _WIN32
-	timeEndPeriod(1);
-#endif
 
 #ifdef _WIN32
 	if (dedicated && dedicated->value)
@@ -93,32 +82,33 @@ Game::Engine::~Engine()
 #endif
 
 	Handler::Game = nullptr;
-	MessageBoxA(NULL, "Text", "Caption", MB_OK);
+	MessageBoxA(NULL, "Destructor Finished", "Caption", MB_OK);
 }
+
+// -----------------------------------------------
+// run()
+// Execute main game loop.
+//
 
 int Game::Engine::run()
 {
+	Game::Timer timer;
+	uint32_t lastFrame = timer.getCurrent(), thisFrame;
+
 	SDL_Event event;
-	uint32_t lastFrame = newTicks(), thisFrame;
 
 	while (!abortLoop)
 	{
-		// if at a full screen console, don't update unless needed
 		if (Minimized || (dedicated && dedicated->value))
 		{
-			SDL_Delay(1);
+			Game::Timer::Delay(1);
 		}
 
-		// Event Processing
 		while (SDL_PollEvent(&event))
-		{
 			SDL_ProcEvent(&event, event.common.timestamp);
-		}
 
-		// Timer Logic
-		for (thisFrame = newTicks(); thisFrame <= lastFrame; thisFrame = newTicks()) { /*SDL_Delay(0);*/ }
-
-		// Game Logic
+		for (thisFrame = timer.getCurrent(); thisFrame <= lastFrame; thisFrame = timer.getCurrent())
+			Game::Timer::Delay();
 
 		try
 		{
@@ -133,15 +123,4 @@ int Game::Engine::run()
 	}
 
 	return 0;
-}
-
-//
-// Entry Point
-//
-
-int main(int argc, char *argv[])
-{
-	Game::Engine game(argc, argv);
-	int retCode = game.run();
-	return retCode;
 }
