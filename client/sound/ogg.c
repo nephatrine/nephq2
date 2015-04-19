@@ -31,10 +31,10 @@
 #include <errno.h>
 
 //#include "../include/vorbisfile.h"
-#include "include/stb_vorbis.c"
 #include "../client.h"
 #include "include/local.h"
 #include "include/vorbis.h"
+#include "include/stb_vorbis.c"
 
 static qboolean ogg_first_init = true; /* First initialization flag. */
 static qboolean ogg_started = false;   /* Initialization flag. */

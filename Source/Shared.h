@@ -1,5 +1,5 @@
-#ifndef SYSTEM_SHARED_H
-#define SYSTEM_SHARED_H 1
+#ifndef NEPHQ2_SHARED_H
+#define NEPHQ2_SHARED_H 1
 
 //
 // Standard Types
@@ -7,6 +7,8 @@
 
 #ifdef __cplusplus
 #include <cstdint>
+#include <string>
+#include <map>
 #else
 #include <stdint.h>
 #if (defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)) || (defined(_MSC_VER) && (_MSC_VER >= 1800))
