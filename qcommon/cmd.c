@@ -91,7 +91,7 @@ Cbuf_AddText
 Adds command text at the end of the buffer
 ============
 */
-void Cbuf_AddText (char *text)
+void Cbuf_AddText (const char *text)
 {
 	int32_t		l;
 	
@@ -551,7 +551,8 @@ char *Cmd_MacroExpandString (char *text)
 	char	*scan;
 	static	char	expanded[MAX_STRING_CHARS];
 	char	temporary[MAX_STRING_CHARS];
-	char	*token, *start;
+	char	*start;
+	const char	*token;
 
 	inquote = false;
 	scan = text;

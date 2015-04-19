@@ -67,7 +67,7 @@ typedef struct sizebuf_s
 void SZ_Init (sizebuf_t *buf, byte *data, int32_t length);
 void SZ_Clear (sizebuf_t *buf);
 void *SZ_GetSpace (sizebuf_t *buf, int32_t length);
-void SZ_Write (sizebuf_t *buf, void *data, int32_t length);
+void SZ_Write (sizebuf_t *buf, const void *data, int32_t length);
 void SZ_Print (sizebuf_t *buf, char *data);	// strcats onto the sizebuf
 
 //============================================================================
@@ -80,7 +80,7 @@ void MSG_WriteByte (sizebuf_t *sb, int32_t c);
 void MSG_WriteShort (sizebuf_t *sb, int32_t c);
 void MSG_WriteLong (sizebuf_t *sb, int32_t c);
 void MSG_WriteFloat (sizebuf_t *sb, float f);
-void MSG_WriteString (sizebuf_t *sb, char *s);
+void MSG_WriteString (sizebuf_t *sb, const char *s);
 void MSG_WriteCoord (sizebuf_t *sb, float f);
 void MSG_WritePos (sizebuf_t *sb, vec3_t pos);
 void MSG_WriteAngle (sizebuf_t *sb, float f);
@@ -382,7 +382,7 @@ The game starts with a Cbuf_AddText ("exec quake.rc\n"); Cbuf_Execute ();
 void Cbuf_Init (void);
 // allocates an initial text buffer that will grow as needed
 
-void Cbuf_AddText (char *text);
+void Cbuf_AddText (const char *text);
 // as new commands are generated from the console or keybindings,
 // the text is added to the end of the command buffer.
 
@@ -512,13 +512,13 @@ void	Cvar_SetValue (char *var_name, float value);
 void Cvar_SetInteger (char *var_name, int32_t integer);
 // expands value to a string and calls Cvar_Set
 
-float	Cvar_VariableValue (char *var_name);
+float	Cvar_VariableValue (const char *var_name);
 // returns 0 if not defined or non numeric
 
-int32_t Cvar_VariableInteger (char *var_name);
+int32_t Cvar_VariableInteger (const char *var_name);
 // returns 0 if not defined or non numeric
 
-char	*Cvar_VariableString (char *var_name);
+const char	*Cvar_VariableString (const char *var_name);
 // returns an empty string if not defined
 
 // Knightmare added
@@ -610,7 +610,7 @@ qboolean	NET_CompareAdr (netadr_t a, netadr_t b);
 qboolean	NET_CompareBaseAdr (netadr_t a, netadr_t b);
 qboolean	NET_IsLocalAddress (netadr_t adr);
 char		*NET_AdrToString (netadr_t a);
-qboolean	NET_StringToAdr (char *s, netadr_t *a);
+qboolean	NET_StringToAdr (const char *s, netadr_t *a);
 void		NET_Sleep(int32_t msec);
 
 //============================================================================
@@ -689,7 +689,7 @@ int32_t			CM_NumInlineModels (void);
 char		*CM_EntityString (void);
 
 // creates a clipping hull for an arbitrary box
-int32_t			CM_HeadnodeForBox (vec3_t mins, vec3_t maxs);
+int32_t			CM_HeadnodeForBox (const vec3_t mins, const vec3_t maxs);
 
 
 // returns an ORed contents mask

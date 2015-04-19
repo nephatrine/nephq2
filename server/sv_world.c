@@ -33,7 +33,7 @@ FIXME: this use of "area" is different from the bsp file use
 // (type *)STRUCT_FROM_LINK(link_t *link, type, member)
 // ent = STRUCT_FROM_LINK(link,entity_t,order)
 // FIXME: remove this mess!
-#define	STRUCT_FROM_LINK(l,t,m) ((t *)((byte *)l - (int32_t)&(((t *)0)->m)))
+#define STRUCT_FROM_LINK(l,t,m) ((t *)((byte *)l - (byte *)&(((t *)0)->m)))
 
 #define	EDICT_FROM_AREA(l) STRUCT_FROM_LINK(l,edict_t,area)
 
@@ -57,7 +57,7 @@ edict_t	**area_list;
 int32_t		area_count, area_maxcount;
 int32_t		area_type;
 
-int32_t SV_HullForEntity (edict_t *ent);
+static int32_t SV_HullForEntity( const edict_t *ent );
 
 
 // ClearLink is used for new headnodes
@@ -87,7 +87,7 @@ SV_CreateAreaNode
 Builds a uniformly subdivided tree for the given world size
 ===============
 */
-areanode_t *SV_CreateAreaNode (int32_t depth, vec3_t mins, vec3_t maxs)
+static areanode_t *SV_CreateAreaNode( int32_t depth, const vec3_t mins, const vec3_t maxs )
 {
 	areanode_t	*anode;
 	vec3_t		size;
@@ -485,7 +485,7 @@ Offset is filled in to contain the adjustment that must be added to the
 testing object's origin to get a point to use with the returned hull.
 ================
 */
-int32_t SV_HullForEntity (edict_t *ent)
+static int32_t SV_HullForEntity( const edict_t *ent )
 {
 	cmodel_t	*model;
 

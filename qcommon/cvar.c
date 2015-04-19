@@ -47,7 +47,7 @@ static qboolean Cvar_InfoValidate (char *s)
 Cvar_FindVar
 ============
 */
-static cvar_t *Cvar_FindVar (char *var_name)
+static cvar_t *Cvar_FindVar(const char *var_name)
 {
 	cvar_t	*var;
     hash32_t hash = Q_HashSanitized32(var_name);
@@ -64,7 +64,7 @@ static cvar_t *Cvar_FindVar (char *var_name)
 Cvar_VariableValue
 ============
 */
-float Cvar_VariableValue (char *var_name)
+float Cvar_VariableValue(const char *var_name)
 {
 	cvar_t	*var;
 	
@@ -80,7 +80,7 @@ float Cvar_VariableValue (char *var_name)
 Cvar_VariableInteger
 =================
 */
-int32_t Cvar_VariableInteger (char *var_name)
+int32_t Cvar_VariableInteger(const char *var_name)
 {
 	cvar_t	*var;
 
@@ -96,7 +96,7 @@ int32_t Cvar_VariableInteger (char *var_name)
 Cvar_VariableString
 ============
 */
-char *Cvar_VariableString (char *var_name)
+const char *Cvar_VariableString(const char *var_name)
 {
 	cvar_t *var;
 	

@@ -1613,7 +1613,7 @@ void Com_PageInMemory (byte *buffer, int32_t size)
 */
 
 
-int32_t Q_strncasecmp (char *s1, char *s2, int32_t n)
+int32_t Q_strncasecmp (const char *s1, char *s2, int32_t n)
 {
 #if 1
     return strncasecmp(s1, s2, n);
@@ -1645,7 +1645,7 @@ int32_t Q_strncasecmp (char *s1, char *s2, int32_t n)
 
 }
 
-int32_t Q_strcasecmp (char *s1, char *s2)
+int32_t Q_strcasecmp (const char *s1, char *s2)
 {
     // do this to ensure termination
     return Q_strncasecmp (s1, s2, 99999);
