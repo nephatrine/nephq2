@@ -130,38 +130,6 @@ const char *Cvar_DefaultString(const char *var_name)
 
 /*
 ============
-Cvar_CompleteVariable
-============
-*/
-char *Cvar_CompleteVariable (char *partial)
-{
-	cvar_t		*cvar;
-	int32_t			len;
-    hash32_t hash;
-    int i;
-	len = strlen(partial);
-	
-	if (!len)
-		return NULL;
-		
-    hash = Q_HashSanitized32(partial);
-	// check exact match
-	for (cvar=cvar_vars[hash.h&CVAR_HASHMAP_MASK] ; cvar ; cvar=cvar->next)
-		if (!Q_HashEquals32(hash, cvar->hash) && !strcmp (partial,cvar->name))
-			return cvar->name;
-
-    // check partial match
-    for (i = 0; i < CVAR_HASHMAP_WIDTH; i++) {
-        for (cvar=cvar_vars[i] ; cvar ; cvar=cvar->next)
-            if (!strncmp (partial,cvar->name, len))
-                return cvar->name;
-    }
-	return NULL;
-}
-
-
-/*
-============
 Cvar_Get
 
 If the variable already exists, the value will not be set
