@@ -360,7 +360,7 @@ Knightmare added
 */
 void Cvar_SetToDefault(const char *var_name)
 {
-	return Cvar_Set2 (var_name, Cvar_DefaultString(var_name), false);
+	Cvar_Set2 (var_name, Cvar_DefaultString(var_name), false);
 }
 
 
