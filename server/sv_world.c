@@ -49,32 +49,32 @@ typedef struct areanode_s
 #define	AREA_DEPTH	4
 #define	AREA_NODES	32
 
-areanode_t	sv_areanodes[AREA_NODES];
-int32_t			sv_numareanodes;
+static areanode_t  sv_areanodes[AREA_NODES];
+static int32_t         sv_numareanodes;
 
-float	*area_mins, *area_maxs;
-edict_t	**area_list;
-int32_t		area_count, area_maxcount;
-int32_t		area_type;
+static const float   *area_mins, *area_maxs;
+static edict_t **area_list;
+static int32_t     area_count, area_maxcount;
+static int32_t     area_type;
 
 static int32_t SV_HullForEntity( const edict_t *ent );
 
 
 // ClearLink is used for new headnodes
-void ClearLink (link_t *l)
 {
 	l->prev = l->next = l;
 }
+inline void ClearLink( link_t *l )
 
-void RemoveLink (link_t *l)
 {
 	l->next->prev = l->prev;
 	l->prev->next = l->next;
 }
+inline void RemoveLink( link_t *l )
 
-void InsertLinkBefore (link_t *l, link_t *before)
 {
 	l->next = before;
+inline void InsertLinkBefore( link_t *l, link_t *before )
 	l->prev = before->prev;
 	l->prev->next = l;
 	l->next->prev = l;
