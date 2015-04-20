@@ -31,7 +31,7 @@ qboolean	cvar_allowCheats = true;
 Cvar_InfoValidate
 ============
 */
-static qboolean Cvar_InfoValidate (char *s)
+static qboolean Cvar_InfoValidate (const char *s)
 {
 	if (strstr (s, "\\"))
 		return false;
@@ -105,26 +105,8 @@ const char *Cvar_VariableString(const char *var_name)
 		return "";
 	return var->string;
 }
-
-/*
-============
-Cvar_DefaultValue
-Knightmare added
-============
-*/
-float Cvar_DefaultValue (char *var_name)
-{
-	cvar_t	*var;
-	var = Cvar_FindVar (var_name);
-	if (!var)
-		return 0;
 #ifdef NEW_CVAR_MEMBERS
-	return atof (var->default_string);
-#else
-	return var->value;
 #endif
-}
-
 
 /*
 ============
@@ -132,7 +114,7 @@ Cvar_DefaultString
 Knightmare added
 ============
 */
-char *Cvar_DefaultString (char *var_name)
+const char *Cvar_DefaultString(const char *var_name)
 {
 	cvar_t *var;
 
@@ -186,7 +168,7 @@ If the variable already exists, the value will not be set
 The flags will be or'ed in if the variable exists.
 ============
 */
-cvar_t *Cvar_Get (char *var_name, char *var_value, int32_t flags)
+cvar_t *Cvar_Get (const char *var_name, const char *var_value, int32_t flags)
 {
 	cvar_t	*var;
     int index;
@@ -253,7 +235,7 @@ cvar_t *Cvar_Get (char *var_name, char *var_value, int32_t flags)
 Cvar_Set2
 ============
 */
-cvar_t *Cvar_Set2 (char *var_name, char *value, qboolean force)
+static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean force)
 {
 	cvar_t		*var;
 
@@ -376,7 +358,7 @@ Cvar_SetToDefault
 Knightmare added
 ============
 */
-cvar_t *Cvar_SetToDefault (char *var_name)
+void Cvar_SetToDefault(const char *var_name)
 {
 	return Cvar_Set2 (var_name, Cvar_DefaultString(var_name), false);
 }

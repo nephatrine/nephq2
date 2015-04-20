@@ -492,7 +492,7 @@ interface from being ambiguous.
 #define CVAR_HASHMAP_MASK 0x7F
 extern	cvar_t	*cvar_vars[CVAR_HASHMAP_WIDTH];
 
-cvar_t *Cvar_Get (char *var_name, char *value, int32_t flags);
+cvar_t *Cvar_Get (const char *var_name, const char *value, int32_t flags);
 // creates the variable if it doesn't exist, or returns the existing one
 // if it exists, the value will not be changed, but flags will be ORed in
 // that allows variables to be unarchived without needing bitflags
@@ -522,12 +522,10 @@ const char	*Cvar_VariableString (const char *var_name);
 // returns an empty string if not defined
 
 // Knightmare added
-float Cvar_DefaultValue (char *var_name);
-// returns 0 if not defined or non numeric
-char	*Cvar_DefaultString (char *var_name);
+const char	*Cvar_DefaultString (const char *var_name);
 // returns an empty string if not defined
 // Knightmare added
-cvar_t *Cvar_SetToDefault (char *var_name);
+void Cvar_SetToDefault (const char *var_name);
 // end Knightmare
 
 char 	*Cvar_CompleteVariable (char *partial);
@@ -900,7 +898,7 @@ void Z_Free (void *ptr);
 void *Z_Malloc (int32_t size);			// returns 0 filled memory
 void *Z_TagMalloc (size_t size, int16_t tag);
 void *Z_Strdup (char *string);
-void *Z_TagStrdup (char *string, int16_t tag);
+void *Z_TagStrdup (const char *string, int16_t tag);
 void *Z_Realloc(void* ptr, int32_t size);
 void Z_FreeTags (int16_t tag);
 
