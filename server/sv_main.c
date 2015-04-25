@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../Source/GameEngine.h"
+
 #include "server.h"
 
 netadr_t	master_adr[MAX_MASTERS];	// address of group servers
@@ -346,7 +348,7 @@ void SVC_GetChallenge (void)
 		// overwrite the oldest
 		svs.challenges[oldest].challenge = rand() & 0x7fff;
 		svs.challenges[oldest].adr = net_from;
-		svs.challenges[oldest].time = curtime;
+		svs.challenges[oldest].time = Game::Engine::GetTick();
 		i = oldest;
 	}
 

@@ -376,7 +376,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <DebugInformationFormat>None</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Midl>
@@ -428,7 +428,7 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <DebugInformationFormat>None</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Midl>
@@ -586,7 +586,8 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
     <ClCompile Include="backends\win32\net_wins.c" />
     <ClCompile Include="backends\win32\q_shwin.c" />
     <ClCompile Include="Source\GameEngine.cpp" />
-    <ClCompile Include="Source\GameTimer.cpp" />
+    <ClCompile Include="Source\SystemMessage.cpp" />
+    <ClCompile Include="Source\SystemTimer.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -627,7 +628,8 @@ copy $(SolutionDir)external\Steamworks\redistributable_bin\win64\steam_api64.dll
     <ClInclude Include="qcommon\wildcard.h" />
     <ClInclude Include="backends\win32\winnewerror.h" />
     <ClInclude Include="Source\GameEngine.h" />
-    <ClInclude Include="Source\GameTimer.h" />
+    <ClInclude Include="Source\SystemMessage.h" />
+    <ClInclude Include="Source\SystemTimer.h" />
     <ClInclude Include="Source\Shared.h" />
   </ItemGroup>
   <ItemGroup>

@@ -253,7 +253,7 @@ do the apropriate things.
 void Com_Quit (void)
 {
 	SV_Shutdown ("Server quit\n", false);
-	//CL_Shutdown ();
+//	CL_Shutdown ();
 
 	if (logfile)
 	{
@@ -261,7 +261,7 @@ void Com_Quit (void)
 		logfile = NULL;
 	}
 
-	if (Handler::Game) Handler::Game->abort();
+	Game::Engine::Abort();
 }
 
 

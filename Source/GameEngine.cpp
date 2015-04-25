@@ -3,123 +3,124 @@
 //
 
 #include "GameEngine.h"
-#include "GameTimer.h"
+#include "SystemMessage.h"
 #include <SDL_events.h>
-
-#ifdef _WIN32
-#include <Windows.h>
-#endif
 
 // -----------------------------------------------
 // Legacy Declarations
 //
 
 #include "../qcommon/shared/q_shared.h"
-void Qcommon_Init(int32_t argc, char **argv);
-void Sys_Error(char *error, ...);
-void SDL_ProcEvent(SDL_Event *event, uint32_t time);
-extern SDL_bool	Minimized;
-extern cvar_t	*dedicated;
-void Qcommon_Frame(int32_t msec);
-void CL_Shutdown(void);
-void Qcommon_Shutdown(void);
-void DeinitConProc(void);
+void Qcommon_Init( int32_t argc, char **argv );
+void Sys_Error( char *error, ... );
+void SDL_ProcEvent( SDL_Event *event, uint32_t time );
+extern SDL_bool Minimized;
+extern cvar_t   *dedicated;
+void Qcommon_Frame( int32_t msec );
+void CL_Shutdown( void );
+void Qcommon_Shutdown( void );
+void DeinitConProc( void );
 
 // -----------------------------------------------
-// Initialize Globals
+// Global Functions/Variables
 //
 
-Game::Engine *Handler::Game = nullptr;
+Game::Engine *Game::Engine::handle = nullptr;
 
-// -----------------------------------------------
-// Constructor
-// Initialize engine.
-//
+bool_t Game::Engine::Abort()
+{	bool_t retCode = false;
 
-Game::Engine::Engine(int argc, char *argv[])
-: abortLoop(false)
-{
-#ifdef _WIN32
-	SetProcessDPIAware();
-#endif
-
-#ifndef _WIN32
-	nostdout = Cvar_Get("nostdout", "0", 0);
-	if (!nostdout->value) {
-		fcntl(0, F_SETFL, fcntl(0, F_GETFL, 0) | FNDELAY);
+	if( Game::Engine::handle )
+	{	retCode = !( Game::Engine::handle->abortLoop );
+		Game::Engine::handle->abortLoop = true;
 	}
-#endif
+	
+	return retCode;
+}
 
-	try
-	{
-		Qcommon_Init(argc, argv);
-	}
-	catch (...)
-	{
-		Sys_Error("Error during initialization");
-	}
+uint32_t Game::Engine::GetTick()
+{	return Game::Engine::handle ? Game::Engine::handle->timer.getLast() : 0;
+}
 
-	Handler::Game = this;
+uint32_t Game::Engine::NewTick()
+{	return Game::Engine::handle ? Game::Engine::handle->timer.getCurrent() : 0;
 }
 
 // -----------------------------------------------
-// Destructor
+// Initialize engine.
+//
+
+Game::Engine::Engine( int argc, char *argv[] )
+	: abortLoop( false )
+{	if( Game::Engine::handle )
+	{	System::Message::Fatal( "Too many Game::Engine initialized." );
+		abortLoop = true;
+	}
+	else Game::Engine::handle = this;
+	
+#ifndef _WIN32
+	nostdout = Cvar_Get( "nostdout", "0", 0 );
+	
+	if( !nostdout->value )
+		fcntl( 0, F_SETFL, fcntl( 0, F_GETFL, 0 ) | FNDELAY );
+		
+#endif
+		
+	try
+	{	Qcommon_Init( argc, argv );
+	}
+	catch( ... )
+	{	Sys_Error( "Error during initialization" );
+	}
+}
+
+// -----------------------------------------------
 // Clean up after engine.
 //
 
 Game::Engine::~Engine()
-{
-	CL_Shutdown();
+{	CL_Shutdown();
 	Qcommon_Shutdown();
-
 #ifdef _WIN32
-	if (dedicated && dedicated->value)
-		FreeConsole();
-
+	//  if (dedicated && dedicated->value)
+	//      FreeConsole();
 	// shut down QHOST hooks if necessary
 	DeinitConProc();
 #endif
-
-	Handler::Game = nullptr;
-	MessageBoxA(NULL, "Destructor Finished", "Caption", MB_OK);
+	
+	if( Game::Engine::handle == this )
+		Game::Engine::handle = nullptr;
+		
+	System::Message::Information( "Destructor Finished" );
 }
 
 // -----------------------------------------------
-// run()
 // Execute main game loop.
 //
 
 int Game::Engine::run()
-{
-	Game::Timer timer;
-	uint32_t lastFrame = timer.getCurrent(), thisFrame;
-
+{	uint32_t lastFrame = timer.getCurrent(), thisFrame;
 	SDL_Event event;
-
-	while (!abortLoop)
-	{
-		if (Minimized || (dedicated && dedicated->value))
-		{
-			Game::Timer::Delay(1);
-		}
-
-		while (SDL_PollEvent(&event))
-			SDL_ProcEvent(&event, event.common.timestamp);
-
-		for (thisFrame = timer.getCurrent(); thisFrame <= lastFrame; thisFrame = timer.getCurrent())
-			Game::Timer::Delay();
-
+	
+	while( !abortLoop )
+	{	while( SDL_PollEvent( &event ) )
+			SDL_ProcEvent( &event, event.common.timestamp );
+			
+		if( Minimized || ( dedicated && dedicated->value ) )
+			System::Timer::Delay( 1 );
+			
+		for( thisFrame = timer.getCurrent(); thisFrame <= lastFrame; thisFrame = timer.getCurrent() )
+			System::Timer::Delay();
+			
 		try
-		{
-			Qcommon_Frame(thisFrame - lastFrame);
+		{	Qcommon_Frame( thisFrame - lastFrame );
 		}
-		catch (...)
-		{
-			// do nothing?
+		catch( ... )
+		{	// do nothing?
 		}
-
+		
 		lastFrame = thisFrame;
 	}
-
+	
 	return 0;
 }

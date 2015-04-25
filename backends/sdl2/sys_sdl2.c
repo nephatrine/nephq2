@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // sys_sdl2.h
 
-#include "../../Source/GameTimer.h"
+#include "../../Source/GameEngine.h"
 
 #include "../../qcommon/qcommon.h"
 #include "sdl2quake.h"
@@ -68,14 +68,9 @@ uint32_t    sys_cacheline;
 Sys_Milliseconds
 ================
 */
-int32_t	curtime;
 int32_t Sys_Milliseconds (void)
 {
-	if (Handler::Timer)
-	{
-		curtime = Handler::Timer->getCurrent();
-	}
-	return curtime;
+	return Game::Engine::NewTick();
 }
 
 
@@ -447,11 +442,11 @@ void Sys_Init (void)
 	if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_VIDEO) != 0){
 		Sys_Error("SDL_Init failed!");
 	}
-    
-#ifdef _WIN32
-	timeBeginPeriod( 1 );
-#endif
 
+#ifdef _WIN32
+	timeBeginPeriod(1);
+#endif
+    
 	SDL_strlcpy(string,SDL_GetPlatform(),sizeof(string));
 	Cvar_Get("sys_os", string, CVAR_NOSET|CVAR_LATCH);
 

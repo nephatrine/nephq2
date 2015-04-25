@@ -19,6 +19,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // sv_main.c -- server main program
 
+#include "../../Source/GameEngine.h"
+
 #include "server.h"
 
 /*
@@ -564,7 +566,7 @@ void SV_SendClientMessages (void)
 		else
 		{
 	// just update reliable	if needed
-			if (c->netchan.message.cursize	|| curtime - c->netchan.last_sent > 1000 )
+			if (c->netchan.message.cursize || Game::Engine::GetTick() - c->netchan.last_sent > 1000)
 				Netchan_Transmit (&c->netchan, 0, NULL);
 		}
 	}

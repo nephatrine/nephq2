@@ -19,6 +19,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // cl.input.c  -- builds an intended movement command to send to the server
 
+#include "../../Source/GameEngine.h"
+
 #include "client.h"
 
 cvar_t	*cl_nodelta;
@@ -751,7 +753,7 @@ void CL_SendCmd (void)
 
 	if (cls.state == ca_connected)
 	{
-		if (cls.netchan.message.cursize	|| curtime - cls.netchan.last_sent > 1000 )
+		if (cls.netchan.message.cursize || Game::Engine::GetTick() - cls.netchan.last_sent > 1000)
 			Netchan_Transmit (&cls.netchan, 0, buf.data);	
 		return;
 	}

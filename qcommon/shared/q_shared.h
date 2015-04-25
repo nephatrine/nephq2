@@ -473,8 +473,6 @@ SYSTEM SPECIFIC
 ==============================================================
 */
 
-extern	int32_t	curtime;		// time returned by last Sys_Milliseconds
-
 int32_t		Sys_Milliseconds (void);
 void	Sys_Mkdir (char *path);
 void	Sys_Rmdir (char *path);

@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // cl_main.c  -- client main loop
 
+#include "../../Source/GameEngine.h"
+
 #include "client.h"
 #include "ui/include/ui_local.h"
 
@@ -1764,7 +1766,7 @@ void CL_Frame (int32_t msec)
 	// decide the simulation time
 	cls.frametime = extratime/1000.0;
 	cl.time += extratime;
-	cls.realtime = curtime;
+	cls.realtime = Game::Engine::GetTick();
 
 	extratime = 0;
 #if 0
